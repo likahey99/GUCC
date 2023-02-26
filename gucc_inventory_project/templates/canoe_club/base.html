@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rango_template_tags %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Canoe Club -
+            {% block title_block %}
+                row row row your boat
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <div>
+        {% block body_block %}
+        {% endblock %}
+        </div>
+        <div>
+        {% block sidebar_block %}
+        {% endblock %}
+
+    </body>
+</html>
