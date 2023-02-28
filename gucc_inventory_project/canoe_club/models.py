@@ -57,7 +57,8 @@ class Page(models.Model):
         return self.title
 
 class Trip(models.Model):
-    name = models.CharField(max_length=128, unique=True)
+    NAME_MAX_LENGTH = 255
+    name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     location = models.CharField(max_length=128)
     date = models.DateField()
     length = models.IntegerField(default=0)
@@ -65,5 +66,17 @@ class Trip(models.Model):
 
     def __str__(self):
         return self.name
+
+class Social(models.Model):
+    NAME_MAX_LENGTH = 255
+    DETAILS_MAX_LENGTH = 255
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    date = models.DateField()
+    details = models.CharField(max_length= DETAILS_MAX_LENGTH)
+    location = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
+
 
 

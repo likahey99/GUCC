@@ -1,25 +1,37 @@
-{% extends 'canoe_club/base.html' %} 
-{% load staticfiles %} 
+{% extends 'canoe_club/base.html' %}
+{% load staticfiles %}
 
-{% block title_block %} 
-    Homepage
-{% endblock %} 
+{% block title_block %}
+    homepage
+{% endblock %}
 
-{% block body_block %} 
-<h1>Welcome to the Canoe Club</h1>
+{% block body_block %}
+<h1>welcome to the canoe club</h1>
 <div>
-    <h2>Upcoming Trip</h2>
+    {% if trips %}
+    <h2>Upcoming trips</h2>
     <ul>
+        {% for trip in trips %}
         <li>list items for each trip</li>
+        {% endfor %}
     </ul>
+    {% else %}
+    <h2><strong>There are no upcoming trips</strong></h2>
+    {% endif %}
 </div>
 
 <div>
-    <h2>Upcoming Socials</h2>
+    {% if socials %}
+    <h2>Upcoming socials</h2>
     <ul>
-        <li>list items for each social</li>
+        {% for social in socials %}
+        <li>{{ social.name }}</li>
+        {% endfor %}
     </ul>
+    {% else %}
+    <h2><strong>There are no upcoming Socials</strong></h2>
+    {% endif %}
 </div>
 
-<!--<img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />-->
-{% endblock %} 
+<!--<img src="{% static 'images/rango.jpg' %}" alt="picture of rango" />-->
+{% endblock %}
