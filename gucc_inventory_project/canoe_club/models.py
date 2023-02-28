@@ -46,3 +46,24 @@ class Admin(User):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="profile_images", blank=True)
+
+class Page(models.Model):
+    title = models.CharField(max_length=128)
+    url = models.URLField()
+    picture = models.ImageField()
+    description = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+class Trip(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+    location = models.CharField(max_length=128)
+    date = models.DateField()
+    length = models.IntegerField(default=0)
+    member = models.CharField(max_length=8)
+
+    def __str__(self):
+        return self.name
+
+
