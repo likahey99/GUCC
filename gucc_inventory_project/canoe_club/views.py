@@ -20,3 +20,6 @@ def socials(request):
     context_dixt = {}
     context_dixt["socials"] = social_list
     return render(request, "canoe_club/socials.html", context_dixt)
+
+def about(request):
+    return render(request, "canoe_club/about.html", {})
