@@ -15,8 +15,6 @@ def index(request):
 
 # Create your views here.
 
-<<<<<<< HEAD
-
 def about(request):
     return render(request, 'canoe_club/about.html')
 
@@ -40,8 +38,6 @@ def user_login(request):
 def register(request):
     return render(request, 'canoe_club/register.html')
 
-=======
->>>>>>> 84314016785ac01f1097c203af98353550ad6d2b
 def socials(request):
     today = datetime.datetime.today()
     social_list = Social.objects.order_by("-date")
