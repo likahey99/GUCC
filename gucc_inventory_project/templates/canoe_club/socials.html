@@ -1,0 +1,26 @@
+{% extends "canoe_club/base.html" %}
+
+{% block title_block %}
+    Socials
+{% endblock %}
+
+{% block body_block %}
+<h1>Socials</h1>
+
+
+<div>
+    {% if socials %}
+    {% for social in socials %}
+    <h2>{{ social.name }}</h2>
+    <h3>Date: {{ social.date }}</h3>
+    <h4>location: {{ social.location }} </h4>
+    <p> {{ social.details }} <p>
+    {% endfor %}
+
+    {% else %}
+    <strong>There are no socials</strong>
+    {%endif%}
+</div>
+
+{% endblock %}
+
