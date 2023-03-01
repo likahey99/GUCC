@@ -12,7 +12,31 @@ def index(request):
     context_dixt["trips"] = trips_list
     context_dixt["socials"] = social_list
     return render(request, 'canoe_club/index.html', context_dixt)
+
 # Create your views here.
+
+def about(request):
+    return render(request, 'canoe_club/about.html')
+
+
+def main_shed(request):
+    return render(request, 'canoe_club/main_shed.html')
+
+
+def maintenance_shed(request):
+    return render(request, 'canoe_club/maintenance_shed.html')
+
+
+def trips(request):
+    return render(request, 'canoe_club/trips.html')
+
+
+def user_login(request):
+    return render(request, 'canoe_club/login.html')
+
+
+def register(request):
+    return render(request, 'canoe_club/register.html')
 
 def socials(request):
     today = datetime.datetime.today()
