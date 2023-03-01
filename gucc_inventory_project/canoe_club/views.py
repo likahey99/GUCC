@@ -15,5 +15,5 @@ def index(request):
 # Create your views here.
 
 def handleTime(model):
-    model.objects.filter(date=datetime.now() - timedelta(days=1)).delete()
+    model.objects.filter(date=datetime.datetime.now() - datetime.timedelta(days=1)).delete()
     return
