@@ -3,11 +3,11 @@ from canoe_club.models import Trip, Social
 import datetime
 
 def index(request):
-    handleTime(Trip)
-    handleTime(Social)
-    trips_list = Trip.objects.order_by("-date")[:5]
-    social_list = Social.objects.order_by("-date")[:5]
+    today = datetime.datetime.today()
+    trips_list = Trip.objects.filter(date__gte=today).order_by("date")[:5]
+    social_list = Social.objects.filter(date__gte=today).order_by("date")[:5]
 
+    print(social_list)
     context_dixt = {}
     context_dixt["trips"] = trips_list
     context_dixt["socials"] = social_list
@@ -15,6 +15,9 @@ def index(request):
 
 # Create your views here.
 
-def handleTime(model):
-    model.objects.filter(date=datetime.datetime.now() - datetime.timedelta(days=1)).delete()
-    return
+def socials(request):
+    today = datetime.datetime.today()
+    social_list = Social.objects.order_by("-date")
+    context_dixt = {}
+    context_dixt["socials"] = social_list
+    return render(request, "canoe_club/socials.html", context_dixt)
