@@ -1,0 +1,30 @@
+[33mcommit df1b248555cd6452b68e2c87b85b105a2cbdfb5e[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Kai Hely <2661378h@student.gla.ac.uk>
+Date:   Wed Mar 1 16:21:02 2023 +0000
+
+    added templates and updated views
+
+[33mcommit 9aa3ea16feb7eea81a460cfb5bb00ee127a12eff[m
+Merge: 0c525d0 c38d01b
+Author: Ayleen Sohaib <2684413S@student.gla.ac.uk>
+Date:   Wed Mar 1 15:50:21 2023 +0000
+
+    urls.py added paths
+
+[33mcommit 0c525d0e70a370bdf1716b8fc05f2c8b25198f5c[m
+Author: Ayleen Sohaib <2684413S@student.gla.ac.uk>
+Date:   Wed Mar 1 15:39:13 2023 +0000
+
+    urls.py added paths
+
+[33mcommit c38d01b6fcac72edb1526b8e2185adf437e2c9a9[m
+Author: Renee Wallis <2560885w@student.gla.ac.uk>
+Date:   Wed Mar 1 15:13:15 2023 +0000
+
+    added socials
+
+[33mcommit 2c1324a27d96a4298683b52606d54aac3344ca37[m
+Author: Renee Wallis <2560885w@student.gla.ac.uk>
+Date:   Wed Mar 1 14:11:31 2023 +0000
+
+    changed display of upcoming events

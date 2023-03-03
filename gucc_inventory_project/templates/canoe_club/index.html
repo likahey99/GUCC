@@ -6,32 +6,38 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>welcome to the canoe club</h1>
-<div>
-    {% if trips %}
-    <h2>Upcoming trips</h2>
-    <ul>
-        {% for trip in trips %}
-        <li>list items for each trip</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <strong>There are no upcoming trips</strong>
-    {% endif %}
-</div>
+    <h1>welcome to the canoe club</h1>
+        <div class="row">
+            <div class="col-sm-5">
+                <div>
+                    {% if trips %}
+                        <h2>Upcoming trips</h2>
+                        <ul>
+                            {% for trip in trips %}
+                                <li>list items for each trip</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            <strong>There are no upcoming trips</strong>
+                    {% endif %}
+                </div>
+            </div>
 
-<div>
-    {% if socials %}
-    <h2>Upcoming socials</h2>
-    <ul>
-        {% for social in socials %}
-        <li>{{ social.name }}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <strong>There are no upcoming Socials</strong>
-    {% endif %}
-</div>
+            <div class="col-sm-5">
+                <div>
+                    {% if socials %}
+                        <h2>Upcoming socials</h2>
+                        <ul>
+                            {% for social in socials %}
+                                <li>{{ social.name }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            <strong>There are no upcoming Socials</strong>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
 
-<!--<img src="{% static 'images/rango.jpg' %}" alt="picture of rango" />-->
+    <img src="{% static 'images/club_kit_photo.jpg' %}" alt="picture of rango" />
 {% endblock %}
