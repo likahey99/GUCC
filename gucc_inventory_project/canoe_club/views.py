@@ -77,3 +77,5 @@ def trip(request, trip_name_slug):
 
 def about(request):
     return render(request, "canoe_club/about.html", {})
+
+#  a change
