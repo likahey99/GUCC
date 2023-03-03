@@ -6,10 +6,10 @@ from django.conf.urls import url
 app_name = 'canoe_club'
 
 urlpatterns = [
-    path('', views.index, name = 'index'),
-    path('about/', views.about, name = 'about'),
+    path("", views.index, name ="index"),
+    path("about/", views.about, name ="about"),
     path('register/', views.register, name='register'),
-
+    
     path('login/', views.user_login, name='login'),
     path('login/profile/', views.user_profile, name='profile'),
     path('login/profile/change_password/', views.change_password, name='change_password'),

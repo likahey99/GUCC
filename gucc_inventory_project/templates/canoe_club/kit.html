@@ -1,0 +1,54 @@
+{% extends "canoe_club/base" %}
+{% load staticfiles %}
+{% block title_block %}
+View Kit
+{% endblock %}
+
+{% block body_block %}
+{% if kit %}
+<div>
+    <!-- add picture static url -->
+</div>
+<div class = container>
+    <div>
+        <h1> {{ kit.name }}</h1>>
+    </div>
+</div>
+
+<div class = "flex-container">
+    <div>
+        <h4>Size: {{ kit.size }} </h4>>
+        <h4>Brand: {{ kit.brand }}} </h4>
+        <h4>Type: {{ kit.type }} </h4>
+    </div>
+    <div>
+        <h4>Colour: {{ kit.colour }}</h4>
+        {% if kit.owner %}
+        <h4>Owner: {{ kit.owner }} </h4>
+        {% endif %}
+        {% if kit.maintenance_problem  %}
+        <h4> {{ kit.maintenance_problem }} </h4>>
+    </div>
+</div>
+
+<div>
+    <!-- move shed button -->
+</div>
+
+<div>
+    <!-- remove item button -->
+</div>
+
+<div>
+    <!-- check out button --->
+</div>
+
+<div>
+    <!-- plus minus button -->
+</div>
+
+
+{% else %}
+<div>
+    <strong>This piece of kit does not exit</strong>
+</div>
