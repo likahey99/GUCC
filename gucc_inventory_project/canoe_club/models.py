@@ -74,8 +74,9 @@ class Kit(models.Model):
     size = models.IntegerField(default=0)
     colour = models.CharField(max_length=20)
     brand = models.CharField(max_length=20)
-    ownerID = models.CharField(max_length=8)  # link to member id
+    owner = models.CharField(max_length=8)  # link to member id
     type = models.CharField(max_length=20)
+    maintenance_problem = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name

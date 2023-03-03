@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from canoe_club.models import Trip, Social
+from canoe_club.models import Trip, Social, Kit
 import datetime
 
 def index(request):
@@ -44,6 +44,17 @@ def socials(request):
     context_dixt = {}
     context_dixt["socials"] = social_list
     return render(request, "canoe_club/socials.html", context_dixt)
+
+def kit(request, kit_name_slug):
+
+    try:
+        kit = Kit.objects.get(slug = kit_name_slug)
+        context_dict["kit"] = kit
+
+    except Kit.DoesNotExist:
+        context_dict["kit"] = None
+
+    return render(request, "canoe_club.html", context_dict)
 
 def about(request):
     return render(request, "canoe_club/about.html", {})
