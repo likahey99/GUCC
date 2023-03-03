@@ -35,8 +35,8 @@ def move_shed(request):
 def maintenance_shed(request):
     return render(request, 'canoe_club/maintenance_shed.html')
 
-def maintenance_shed(request):
-    return render(request, 'canoe_club/maintenance_shed.html')
+def maintenance_shed_kit(request):
+    return render(request, 'canoe_club/maintenance_shed/maintenance_shed_kit.html')
 
 def kit(request, kit_name_slug):
 
@@ -114,8 +114,3 @@ def add_trip(request):
 
 def remove_trip(request):
     return render(request, "canoe_club/trips/trip/remove_trip.html")
-
-
-
-
-
