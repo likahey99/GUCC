@@ -63,7 +63,7 @@ class Trip(models.Model):
     location = models.CharField(max_length=128)
     date = models.DateField()
     length = models.IntegerField(default=0)
-    member = models.CharField(max_length=8)  # link to member id
+    member = models.ManyToManyField(User, on_delete=models.CASCADE)  # link to member id
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -80,7 +80,7 @@ class Kit(models.Model):
     size = models.IntegerField(default=0)
     colour = models.CharField(max_length=20)
     brand = models.CharField(max_length=20)
-    owner = models.CharField(max_length=8)  # link to member id
+    owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)  # link to member id
     type = models.CharField(max_length=20)
     maintenance_problem = models.CharField(max_length=20)
     slug = models.SlugField(unique=True)
