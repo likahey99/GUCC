@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 
 # Create your models here.
@@ -62,7 +63,12 @@ class Trip(models.Model):
     location = models.CharField(max_length=128)
     date = models.DateField()
     length = models.IntegerField(default=0)
-    member = models.CharField(max_length=8)  # link to member id
+    member = models.ManyToManyField(User, on_delete=models.CASCADE)  # link to member id
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Trip, self).save(*args,**kwargs)
 
     def __str__(self):
         return self.name
@@ -74,24 +80,17 @@ class Kit(models.Model):
     size = models.IntegerField(default=0)
     colour = models.CharField(max_length=20)
     brand = models.CharField(max_length=20)
-    owner = models.CharField(max_length=8)  # link to member id
+    owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)  # link to member id
     type = models.CharField(max_length=20)
     maintenance_problem = models.CharField(max_length=20)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Kit, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
-
-
-class Page(models.Model):
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
-    kit = models.ForeignKey(Kit, on_delete=models.CASCADE)
-    title = models.CharField(max_length=128)
-    url = models.URLField()
-    picture = models.ImageField()
-    description = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
 
 
 class Social(models.Model):
