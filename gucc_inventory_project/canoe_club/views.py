@@ -54,7 +54,18 @@ def kit(request, kit_name_slug):
     except Kit.DoesNotExist:
         context_dict["kit"] = None
 
-    return render(request, "canoe_club.html", context_dict)
+    return render(request, "canoe_club/kit.html", context_dict)
+
+def trip(request, trip_name_slug):
+
+    try:
+        trip = Trip.objects.get(slug = kit_name_slug)
+        context_dict["trip"] = trip
+
+    except Trip.DoesNotExist:
+        context_dict["trip"] = None
+
+    return render(request, "canoe_club/trip.html", context_dict)
 
 def about(request):
     return render(request, "canoe_club/about.html", {})

@@ -17,10 +17,11 @@ urlpatterns = [
     #
 
     path('maintenance_shed/', views.maintenance_shed, name='maintenance_shed'),
-    # path('maintenance_shed/item/', views.maintenance_shed_item, name='maintenance_shed_item'),
+    # path('maintenance_shed/<slug:kit_name_slug>/', views.kit, name='maintenance_shed_item'),
     # path('maintenance_shed/item/move_item/', views.move_item, name='move_item'),
 
     path('main_shed/', views.main_shed, name='main_shed'),
+    path('main_shed/<slug:kit_name_slug>/', views.kit, name='main_shed'),
     # path('main_shed/item/add_item/', views.add_item, name='add_item'),
     # path('main_shed/item/move_shed/', views.move_shed, name='move_shed'),
 
