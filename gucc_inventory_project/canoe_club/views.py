@@ -50,7 +50,7 @@ def trips(request):
     trip_list = Trip.objects.order_by("-date")
     context_dixt = {}
     context_dixt["trips"] = trip_list
-    return render(request, "canoe_club/trip.html", context_dixt)
+    return render(request, "canoe_club/trips.html", context_dixt)
 
 
 def kit(request, kit_name_slug):
