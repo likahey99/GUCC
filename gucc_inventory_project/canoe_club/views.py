@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from canoe_club.models import Trip, Social, Kit
 import datetime
+from django.contrib.auth.models import User
+from .forms import UserForm, UserProfileForm
 
 def index(request):
     today = datetime.datetime.today()
@@ -23,20 +25,17 @@ def main_shed(request):
     return render(request, 'canoe_club/main_shed.html')
 
 def add_kit(request):
-    return render(request, 'canoe_club/main_shed/kit/add_kit.html')
+    return render(request, 'canoe_club/add_kit.html')
 
 def remove_kit(request):
-    return render(request, 'canoe_club/main_shed/kit/remove_kit.html')
+    return render(request, 'canoe_club/remove_kit.html')
 
 def move_shed(request):
-    return render(request, 'canoe_club/main_shed/kit/move_shed.html')
+    return render(request, 'canoe_club/move_shed.html')
 
 
 def maintenance_shed(request):
     return render(request, 'canoe_club/maintenance_shed.html')
-
-def maintenance_shed_kit(request):
-    return render(request, 'canoe_club/maintenance_shed/maintenance_shed_kit.html')
 
 def kit(request, kit_name_slug):
 
@@ -50,22 +49,25 @@ def kit(request, kit_name_slug):
     return render(request, "canoe_club/kit.html", context_dict)
 
 def move_kit(request, kit_name_slug):
-    return render(request, "canoe_club/kit/move_kit.html")
+    return render(request, "canoe_club/move_kit.html")
 
 def user_login(request):
     return render(request, 'canoe_club/login.html')
 
-def user_profile(request):
-    return render(request, 'canoe_club/login/profile.html')
+def profile(request):
+    return render(request,"canoe_club/profile.html")
 
 def change_password(request):
-    return render(request, 'canoe_club/login/profile/change_password.html')
+    return render(request, 'canoe_club/change_password.html')
 
 def edit_profile(request):
-    return render(request, 'canoe_club/login/profile/edit_profile.html')
+    return render(request, 'canoe_club/edit_profile.html')
 
 def register(request):
-    return render(request, 'canoe_club/register.html')
+    return render(request, "canoe_club/register.html", context_dict)
+
+def login(request):
+    return render(request, "canoe_club/login.html", context_dict)
 
 def socials(request):
     today = datetime.datetime.today()
@@ -75,10 +77,10 @@ def socials(request):
     return render(request, "canoe_club/socials.html", context_dixt)
 
 def add_social(request):
-    return render(request, "canoe_club/socials/add_social.html")
+    return render(request, "canoe_club/add_social.html")
 
 def remove_social(request):
-    return render(request, "canoe_club/socials/remove_social.html")
+    return render(request, "canoe_club/remove_social.html")
 
 
 def trips(request):
@@ -99,9 +101,6 @@ def trip(request, trip_name_slug):
         context_dict["trip"] = None
 
     return render(request, "canoe_club/trip.html", context_dict)
-
-def trip_member(request):
-    return render(request, "canoe_club/trips/trip/member.html")
 
 def add_trip_member(request):
     return render(request, "canoe_club/trips/trip/member/add_member.html")

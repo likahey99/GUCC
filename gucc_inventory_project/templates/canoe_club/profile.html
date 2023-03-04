@@ -1,10 +1,25 @@
 {% extends "canoe_club/base.html" %}
 
 {% block title_block %}
-  <title>Profile</title>
+  <title>{{ selected_user.username }}'s Profile </title>
 {% endblock %}
 {% block body_block %}
 <div class="container">
-  <h1>Profile</h1>
-  <img src ="{{ user.userprofile.image.url }}" alt="" width="240" height="320">
-  <p> Username: {{ user }} </p>
+  <h1>{{ selected_user.username }}'s Profile</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+    <img src ="{{ MEDIA URL }}{{ userprofile.image }}" alt="" width="240" height="320"
+         alt="{{ selected_user.username }}'s profile image" />
+    <br/>
+    <div>
+    {% if selected_user == user %}
+      <form method="post" action="." enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Update" />
+      </form>
+    {% endif %}
+  </div>
+</div>
