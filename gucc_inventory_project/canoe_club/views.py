@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
 from canoe_club.models import Trip, Social, Kit
 import datetime
-from django.contrib.auth.models import User
 from .forms import UserForm, UserProfileForm
 
 def index(request):
@@ -64,10 +66,51 @@ def edit_profile(request):
     return render(request, 'canoe_club/edit_profile.html')
 
 def register(request):
+    registered = False
+    if request.method == "POST":
+        user_form = UserForm(request.post)
+        profile_form = UserProfileForm(request.post)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            profile = profile_form.save(commit = False)
+            profile.user = user
+            if "picture" in request.FILES:
+                profile.picture = request.FILES["picture"]
+
+            profile.save()
+            registered = True
+        else:
+            print(user_form.errors,profile_form.errors)
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+
+    context_dict = {}
+    context_dict["user_form"] = user_form
+    context_dict["profile_form"] = profile_form
+    context_dict["registered"] = registered
     return render(request, "canoe_club/register.html", context_dict)
 
-def login(request):
-    return render(request, "canoe_club/login.html", context_dict)
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user_is_active:
+                login(request,user)
+                return redirect(reverse("canoe_club:index"))
+            else:
+                return HttpResponse("Your canoe club account has been deactivated")
+
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied")
+
+    return render(request, "canoe_club/login.html")
 
 def socials(request):
     today = datetime.datetime.today()
