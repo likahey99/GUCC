@@ -14,16 +14,11 @@ class User(AbstractUser):
     # 
     # base_role = ADMIN
     is_admin = models.BooleanField("is admin", default=False)
-    is_member = models.BooleanField("is user", default=False)
+    is_member = models.BooleanField("is member", default=True)
     # user_type = models.PositiveSmallIntegerField(choices=ROLE_CHOICES)
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.user_type = self.base_role
-            return super().save(*args, **kwargs)
 
 
 # class MemberManager(BaseUserManager):
