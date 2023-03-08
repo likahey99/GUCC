@@ -19,42 +19,114 @@
         <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
     </head>
     <body>
-        <header>
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info p-0">
-                <a class="navbar-brand p-2" href="{% url 'canoe_club:index' %}">Canoe Club</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <div id="home"></div>
 
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:index' %}">Home</a></li>
-                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:about' %}">About</a></li>
-{#                        {% if user.is_authenticated %}#}
-                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:maintenance_shed' %}">Maintenance Shed</a></li>
-{#                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:auth_logout' %}?next=//">Logout</a></li>#}
-{#                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:add_category' %}">Add Category</a></li>#}
-{#                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:auth_password_change' %}">Change Password</a></li>#}
-{#                        {% else %}#}
-{#                        {% endif %}#}
-                    </ul>
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:register' %}">Register Here</a></li>
-                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:login' %}">Login</a></li>
-                    </ul>
+        <!-- NAVBAR WIP not happy with it - Kai-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-info p-0">
+
+            <div class="d-flex flex-grow-1">
+                <span class="w-100 d-lg-none d-block">
+                    <!-- hidden spacer to center brand on mobile --></span>
+
+            </div>
+            <div class="collapse navbar-collapse flex-grow-1 text-left" id="myNavbar">
+                <ul class="navbar-nav ms-auto flex-nowrap">
+                    <li class="nav-item">
+                        <a href="{% url 'canoe_club:index' %}" class="nav-link m-2 menu-item nav-active">Index</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'canoe_club:about' %}" class="nav-link m-2 menu-item">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'canoe_club:trips' %}" class="nav-link m-2 menu-item">Trips</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'canoe_club:socials' %}" class="nav-link m-2 menu-item">Socials</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="d-flex flex-grow-1">
+                <span class="w-100 d-lg-none d-block">
+                    <!-- hidden spacer to center brand on mobile --></span>
+                <a class="navbar-brand d-none d-lg-inline-block" href="{% url 'canoe_club:index' %}"> GUCC </a>
+                <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
+                    <img src="//placehold.it/40?text=LOGO" alt="logo">
+                </a>
+                <div class="w-100 text-right">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                 </div>
-            </nav>
-        </header>
+            </div>
 
-        <div class="container-fluid">
-            <div class="row">
-                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                    <div class="sidebar-sticky">
-                    {% block sidebar_block %}
-{#                        {% get_category_list category %}#}
-                    {% endblock %}
-                    </div>
-                </nav>
+            <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+                <ul class="navbar-nav ms-auto flex-nowrap">
+                    <li class="nav-item">
+                        <a href="{% url 'canoe_club:main_shed' %}" class="nav-link m-2 menu-item nav-active">Main Shed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'canoe_club:maintenance_shed' %}" class="nav-link m-2 menu-item">Maintenance Shed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'canoe_club:login' %}" class="nav-link m-2 menu-item">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'canoe_club:login' %}" class="nav-link m-2 menu-item">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+            {#            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info p-0">#}
+            {#                <a class="navbar-brand p-2" href="{% url 'canoe_club:index' %}">Canoe Club</a>#}
+            {#                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">#}
+            {#                    <span class="navbar-toggler-icon"></span>#}
+            {#                </button>#}
+            {##}
+            {#                <div class="collapse navbar-collapse" id="navbarCollapse">#}
+            {#                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">#}
+            {#                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:index' %}">Home</a></li>#}
+            {#                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:about' %}">About</a></li>#}
+            {#                        {% if user.is_authenticated %}#}
+            {#                        <div class="d-flex justify-content-end">#}
+            {#                            <li class="nav-item active "><a class="nav-link" href="{% url 'canoe_club:maintenance_shed' %}">Maintenance Shed</a></li>#}
+            {#                        </div>#}
+            {#                    </ul>#}
+            {##}
+            {#                    <ul class="navbar-nav">#}
+            {#                        <li class="nav-item dropdown">#}
+            {#                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Menu </a>#}
+            {#                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">#}
+            {#                                <li><a class="dropdown-item" href="#">Action</a></li>#}
+            {#                                <li><a class="dropdown-item" href="#">Another action</a></li>#}
+            {#                            </ul>#}
+            {#                        </li>#}
+            {#                    </ul>#}
+            {#                </div>#}
+            {#            </nav>#}
+        {#                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:auth_logout' %}?next=//">Logout</a></li>#}
+        {#                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:add_category' %}">Add Category</a></li>#}
+        {#                        <li class="nav-item active"><a class="nav-link" href="{% url 'canoe_club:auth_password_change' %}">Change Password</a></li>#}
+        {#                        {% else %}#}
+{#                        {% endif %}#}
+
+{#                    <ul class="navbar-nav mr-auto">#}
+{#                        <li class="nav-item active d-flex me-2"><a class="nav-link" href="{% url 'canoe_club:register' %}">Register Here</a></li>#}
+{#                        <li class="nav-item active d-flex justify-content-end"><a class="nav-link d-flex justify-content-end" href="{% url 'canoe_club:login' %}">Login</a></li>#}
+{#                    </ul>#}
+
+
+{#        <div class="container-fluid">#}
+{#            <div class="row">#}
+{#                <nav class="col-md-2 d-none d-md-block bg-light sidebar">#}
+{#                    <div class="sidebar-sticky">#}
+{#                    {% block sidebar_block %}#}
+{##}
+{#                    {% endblock %}#}
+{#                    </div>#}
+{#                </nav>#}
 
                 <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
                     {% block body_block %}{% endblock %}
