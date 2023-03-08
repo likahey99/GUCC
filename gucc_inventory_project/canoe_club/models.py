@@ -50,7 +50,7 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
 
@@ -60,7 +60,7 @@ class Trip(models.Model):
     location = models.CharField(max_length=128)
     date = models.DateField()
     length = models.IntegerField(default=0)
-    members = models.ManyToManyField(User, on_delete=models.CASCADE)
+    members = models.ManyToManyField(User)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):

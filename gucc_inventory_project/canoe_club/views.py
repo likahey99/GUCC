@@ -100,7 +100,7 @@ def user_login(request):
         user = authenticate(username=username, password=password)
 
         if user:
-            if user_is_active:
+            if user.is_active:
                 login(request,user)
                 return redirect(reverse("canoe_club:index"))
             else:
