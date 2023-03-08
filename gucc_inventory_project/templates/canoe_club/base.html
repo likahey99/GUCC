@@ -22,7 +22,7 @@
         <div id="home"></div>
 
         <!-- NAVBAR WIP not happy with it - Kai-->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-info p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info p-0">
 
             <div class="d-flex flex-grow-1">
                 <span class="w-100 d-lg-none d-block">
@@ -62,6 +62,7 @@
 
             <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
                 <ul class="navbar-nav ms-auto flex-nowrap">
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a href="{% url 'canoe_club:main_shed' %}" class="nav-link m-2 menu-item nav-active">Main Shed</a>
                     </li>
@@ -69,11 +70,16 @@
                         <a href="{% url 'canoe_club:maintenance_shed' %}" class="nav-link m-2 menu-item">Maintenance Shed</a>
                     </li>
                     <li class="nav-item">
+                        <a href="{% url 'canoe_club:logout' %}" class="nav-link m-2 menu-item">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
                         <a href="{% url 'canoe_club:login' %}" class="nav-link m-2 menu-item">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'canoe_club:login' %}" class="nav-link m-2 menu-item">Register</a>
+                        <a href="{% url 'canoe_club:register' %}" class="nav-link m-2 menu-item">Register</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -128,17 +134,15 @@
 {#                    </div>#}
 {#                </nav>#}
 
-                <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     {% block body_block %}{% endblock %}
 
                     <!-- FOOTER -->
                     <footer class="bg-info text-white text-center text-lg-start fixed-bottom bottom-border">
-                        <p class="float-right"><a href="#">Back to top</a></p>
+                        <p class="float-right"><a href="#" class="text-white mr-3">Back to top</a></p>
                         <p>&copy; Group 10a &middot; <a href="#" class="text-white">Privacy</a> &middot; <a href="#" class="text-white">Terms</a></p>
                     </footer>
                 </main>
-            </div>
-        </div>
 
         <!-- Bootstrap core JavaScript -->
         <!-- Placed at the end of the document so the pages load faster -->
