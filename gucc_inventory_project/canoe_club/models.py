@@ -60,6 +60,7 @@ class Trip(models.Model):
     location = models.CharField(max_length=128)
     date = models.DateField()
     length = models.IntegerField(default=0)
+    members = models.ManyToManyField(User, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
