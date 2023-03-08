@@ -50,7 +50,7 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User)
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
 
