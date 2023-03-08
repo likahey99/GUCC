@@ -49,6 +49,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
+    def __str__(self):
+        return user.username
 
 class Trip(models.Model):
     NAME_MAX_LENGTH = 255

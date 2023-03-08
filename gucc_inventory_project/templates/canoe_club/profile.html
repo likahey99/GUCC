@@ -1,0 +1,31 @@
+{% extends "canoe_club/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+  <title>{{ selected_user.username }}'s Profile </title>
+{% endblock %}
+{% block body_block %}
+<div class="container">
+  <h1>{{ selected_user.username }}'s Profile</h1>
+</div>
+
+    <div class="container">
+      <div class="row">
+      {% if profile.picture %}
+        <img src ="{{ MEDIA_URL }}{{ profile.picture.url }}" alt="" width="200" height="200"
+             alt="{{ selected_user.username }}'s profile image" />
+      {% else %} 
+        <img src="{% static 'images/default_user_profile.jpg' %}" width="200" height="200">
+      {% endif %}
+        <br/>
+        </div>
+        <br/>
+       
+    {% if selected_user == user %}
+      <form method="post" action="{% url 'canoe_club:edit_profile' selected_user.username %}">
+      {% csrf_token %}
+      <input type="submit" value="edit profile" />
+      </form>
+    </div>
+    {% endif %}
+{% endblock %}

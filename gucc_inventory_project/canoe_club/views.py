@@ -2,11 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
-<<<<<<< HEAD
-=======
 from django.contrib.auth.decorators import login_required
->>>>>>> 4bfa1deb57cd620dfda846922c205300afae16e4
-from canoe_club.models import Trip, Social, Kit
+from canoe_club.models import Trip, Social, Kit, UserProfile, User
 import datetime
 from .forms import UserForm, UserProfileForm
 
@@ -61,7 +58,14 @@ def user_login(request):
     return render(request, 'canoe_club/login.html')
 
 def user_profile(request,username):
-    return render(request,"accounts/profile.html")
+    try:
+        selected_user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return redirect(reverse('canoe_club:index'))
+
+    profile = UserProfile.objects.get(user=selected_user)
+
+    return render(request,"canoe_club/profile.html",{"selected_user":selected_user,"profile":profile})
 
 def change_password(request):
     return render(request, 'canoe_club/change_password.html')
@@ -123,11 +127,6 @@ def user_logout(request):
         return redirect(reverse("canoe_club:index"))
 
     return render(request, "accounts/logout.html")
-
-@login_required
-def user_logout(request):
-    logout(request)
-    return redirect(reverse('canoe_club:index'))
 
 def socials(request):
     today = datetime.datetime.today()
