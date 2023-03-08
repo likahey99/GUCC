@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from canoe_club.models import Trip, Social, Kit
 import datetime
 from .forms import UserForm, UserProfileForm
@@ -56,8 +56,8 @@ def move_kit(request, kit_name_slug):
 def user_login(request):
     return render(request, 'canoe_club/login.html')
 
-def profile(request):
-    return render(request,"canoe_club/profile.html")
+def user_profile(request,username):
+    return render(request,"accounts/profile.html")
 
 def change_password(request):
     return render(request, 'canoe_club/change_password.html')
@@ -81,6 +81,7 @@ def register(request):
 
             profile.save()
             registered = True
+            login(request,user)
         else:
             print(user_form.errors,profile_form.errors)
     else:
@@ -91,7 +92,7 @@ def register(request):
     context_dict["user_form"] = user_form
     context_dict["profile_form"] = profile_form
     context_dict["registered"] = registered
-    return render(request, "canoe_club/register.html", context_dict)
+    return render(request, "accounts/register.html", context_dict)
 
 def user_login(request):
     if request.method == "POST":
@@ -110,7 +111,14 @@ def user_login(request):
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied")
 
-    return render(request, "canoe_club/login.html")
+    return render(request, "accounts/login.html")
+
+def user_logout(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect(reverse("canoe_club:index"))
+
+    return render(request, "accounts/logout.html")
 
 def socials(request):
     today = datetime.datetime.today()
