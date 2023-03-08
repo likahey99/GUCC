@@ -40,11 +40,12 @@ def populate():
          'brand': 'brand',
          'owner': 'owner',
          'type': 'type',
-         'maintenance problem': 'maintenance problem'}
+         'maintenance problem': 'maintenance problem',
+         'amount': 0}
     ]
 
     for trip, trip_data in trips.items():
-        t = add_trip(name=trip_data['name'], location=trip_data['location'], date=trip_data['date'],
+        t = add_trip(name=trip_data['name'], location=trip_data['location'], date=trip_data['date'], length=trips['length'],
                      members=trip_data['members'])
 
 
@@ -66,9 +67,10 @@ def add_social(name, date, details, location):
     return s
 
 
-def add_kit(name, size, colour, brand, owner, type, maintenanceProblem):
+def add_kit(name, size, colour, brand, owner, type, maintenance_problem, amount):
     k = Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, type=type)
-    k.maintenanceProblem = maintenanceProblem
+    k.maintenance_problem = maintenance_problem
+    k.amount = amount + 1
     k.save()
     return k
 
