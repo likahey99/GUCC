@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from canoe_club.models import Trip, Social, Kit
 import datetime
 from .forms import UserForm, UserProfileForm
@@ -111,6 +112,11 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied")
 
     return render(request, "canoe_club/login.html")
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('canoe_club:index'))
 
 def socials(request):
     today = datetime.datetime.today()
