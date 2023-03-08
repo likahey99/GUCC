@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
+<<<<<<< HEAD
+=======
+from django.contrib.auth.decorators import login_required
+>>>>>>> 4bfa1deb57cd620dfda846922c205300afae16e4
 from canoe_club.models import Trip, Social, Kit
 import datetime
 from .forms import UserForm, UserProfileForm
@@ -119,6 +123,11 @@ def user_logout(request):
         return redirect(reverse("canoe_club:index"))
 
     return render(request, "accounts/logout.html")
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('canoe_club:index'))
 
 def socials(request):
     today = datetime.datetime.today()
