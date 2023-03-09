@@ -1,5 +1,36 @@
 {% extends 'canoe_club/base.html' %}
 {% load staticfiles %}
+<head>
+    <style>
+        .form-signin {
+          width: 100%;
+          max-width: 330px;
+          padding: 15px;
+          margin: auto;
+        }
+
+        .form-signin .checkbox {
+          font-weight: 400;
+        }
+
+        .form-signin .form-floating:focus-within {
+          z-index: 2;
+        }
+
+        .form-signin input[type="email"] {
+          margin-bottom: -1px;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+          margin-bottom: 10px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+    </style>
+</head>
 
 {% block title_block %}
   Login
@@ -9,14 +40,30 @@
 {% if user.is_authenticated %}
     <strong>You are already logged in! <a href = "{% url 'canoe_club:index' %}">Return home</a></strong>
 {% else %}
-    <h1>Login to Canoe</h1>
-    <form id="login_form" method="post" action="{% url 'canoe_club:login' %}">
+
+<body class="text-center" style="display: flex; align-items: center; padding-top: 40px; padding-bottom: 40px; background-color: #f5f5f5;">
+<main class="form-signin w-100 m-auto bg-info">
+  <form id="login_form" method="post" action="{% url 'canoe_club:login' %}">
       {% csrf_token %}
-      Username: <input type="text" name="username" value="" size="50" />
-      <br />
-      Password: <input type="password" name="password" value="" size="50" />
-      <br />
-      <input type="submit" value="submit" />
-    </form>
-{% endif %}
+      <img class="mb-4" src="{% static 'images/canoe_club_logo.jpg' %}" alt="" width="72" height="57">
+
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+      <div class="form-floating">
+          <label for="floatingInput" class="sr-only">Username</label>
+          <input type="text" class="form-control" id="floatingInput" name="username" value="" size="50" placeholder="Username">
+      </div>
+      <div class="form-floating">
+          <label for="floatingPassword" class="sr-only">Password</label>
+          <input type="password" class="form-control" name="password" id="floatingPassword" value="" size="50" placeholder="Password">
+      </div>
+      <button class="w-100 btn btn-lg btn-primary mt-4" type="submit" value="submit">Sign in</button>
+      <a href="{% url 'canoe_club:index' %}">
+        <button class="w-50 btn btn-lg btn-outline-light mt-4 mb-4" href="{% url 'canoe_club:index' %}" type="button">Home</button>
+      </a>
+      <p class="mt-5 mb-3 text-muted">&copy; GUCC 2023</p>
+  </form>
+    {% endif %}
+</main>
+
 {% endblock %}
