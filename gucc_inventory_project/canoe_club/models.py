@@ -17,10 +17,6 @@ class User(AbstractUser):
     is_member = models.BooleanField("is member", default=True)
     # user_type = models.PositiveSmallIntegerField(choices=ROLE_CHOICES)
 
-    def get_absolute_url(self):
-        return reverse("users:detail", kwargs={"username": self.username})
-
-
 # class MemberManager(BaseUserManager):
 #     def get_queryset(self, *args, **kwargs):
 #         results = super().get_queryset(*args, **kwargs)
@@ -50,9 +46,11 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
+    def __str__(self):
+        return user.username
 
 class Trip(models.Model):
     NAME_MAX_LENGTH = 255

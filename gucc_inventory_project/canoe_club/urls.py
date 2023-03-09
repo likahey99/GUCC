@@ -7,9 +7,10 @@ urlpatterns = [
     path('register/', views.register, name='register'), #has view
 
     path('login/', views.user_login, name='login'), #has view
-    path('<username>', views.profile, name='profile'), # has view
-    path('<username>/change_password/', views.change_password, name='change_password'), #has view
-    path('<username>/edit_profile/', views.edit_profile, name='edit_profile'), #has edit_profile
+    path('logout/', views.user_logout, name='logout'), #has view
+    path('profile/<username>', views.user_profile, name='profile'), # has view
+    path('profile/<username>/change_password/', views.change_password, name='change_password'), #has view
+    path('profile/<username>/edit_profile/', views.edit_profile, name='edit_profile'), #has edit_profile
 
 
     path('maintenance_shed/', views.maintenance_shed, name='maintenance_shed'), #has view

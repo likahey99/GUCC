@@ -17,12 +17,13 @@
 
         <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     </head>
     <body>
         <div id="home"></div>
 
         <!-- NAVBAR WIP not happy with it - Kai-->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-info p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info p-0">
 
             <div class="d-flex flex-grow-1">
                 <span class="w-100 d-lg-none d-block">
@@ -62,6 +63,7 @@
 
             <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
                 <ul class="navbar-nav ms-auto flex-nowrap">
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a href="{% url 'canoe_club:main_shed' %}" class="nav-link m-2 menu-item nav-active">Main Shed</a>
                     </li>
@@ -69,11 +71,16 @@
                         <a href="{% url 'canoe_club:maintenance_shed' %}" class="nav-link m-2 menu-item">Maintenance Shed</a>
                     </li>
                     <li class="nav-item">
+                        <a href="{% url 'canoe_club:logout' %}" class="nav-link m-2 menu-item">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
                         <a href="{% url 'canoe_club:login' %}" class="nav-link m-2 menu-item">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'canoe_club:login' %}" class="nav-link m-2 menu-item">Register</a>
+                        <a href="{% url 'canoe_club:register' %}" class="nav-link m-2 menu-item">Register</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -117,29 +124,15 @@
 {#                        <li class="nav-item active d-flex justify-content-end"><a class="nav-link d-flex justify-content-end" href="{% url 'canoe_club:login' %}">Login</a></li>#}
 {#                    </ul>#}
 
-
-{#        <div class="container-fluid">#}
-{#            <div class="row">#}
-{#                <nav class="col-md-2 d-none d-md-block bg-light sidebar">#}
-{#                    <div class="sidebar-sticky">#}
-{#                    {% block sidebar_block %}#}
-{##}
-{#                    {% endblock %}#}
-{#                    </div>#}
-{#                </nav>#}
-
-                <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     {% block body_block %}{% endblock %}
 
                     <!-- FOOTER -->
-                    <footer>
-                    <footer>
-                        <p class="float-right"><a href="#">Back to top</a></p>
-                        <p>&copy; Group 10a &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+                    <footer class="bg-info text-white text-center text-lg-start fixed-bottom bottom-border">
+                        <p class="float-right"><a href="#" class="text-white mr-3">Back to top</a></p>
+                        <p>&copy; Group 10a &middot; <a href="#" class="text-white">Privacy</a> &middot; <a href="#" class="text-white">Terms</a></p>
                     </footer>
                 </main>
-            </div>
-        </div>
 
         <!-- Bootstrap core JavaScript -->
         <!-- Placed at the end of the document so the pages load faster -->
@@ -147,6 +140,8 @@
         <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js"></script>
+
+
 
 
     </body>

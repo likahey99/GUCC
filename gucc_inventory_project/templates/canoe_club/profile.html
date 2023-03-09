@@ -1,4 +1,5 @@
 {% extends "canoe_club/base.html" %}
+{% load staticfiles %}
 
 {% block title_block %}
   <title>{{ selected_user.username }}'s Profile </title>
@@ -8,18 +9,23 @@
   <h1>{{ selected_user.username }}'s Profile</h1>
 </div>
 
-<div class="container">
-  <div class="row">
-    <img src ="{{ MEDIA URL }}{{ userprofile.picture }}" alt="" width="240" height="320"
-         alt="{{ selected_user.username }}'s profile image" />
-    <br/>
-    <div>
+    <div class="container">
+      <div class="row">
+      {% if profile.picture %}
+        <img src ="{{ MEDIA_URL }}{{ profile.picture.url }}" alt="" width="200" height="200"
+             alt="{{ selected_user.username }}'s profile image" />
+      {% else %} 
+        <img src="{% static 'images/default_user_profile.jpg' %}" width="200" height="200">
+      {% endif %}
+        <br/>
+        </div>
+        <br/>
+       
     {% if selected_user == user %}
-      <form method="post" action="." enctype="multipart/form-data">
+      <form method="post" action="{% url 'canoe_club:edit_profile' selected_user.username %}">
       {% csrf_token %}
-      {{ form.as_p }}
-      <input type="submit" value="Update" />
+      <input type="submit" value="edit profile" />
       </form>
+    </div>
     {% endif %}
-  </div>
-</div>
+{% endblock %}

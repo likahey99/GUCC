@@ -1,0 +1,25 @@
+{% extends "canoe_club/base.html" %}
+
+{% block title_block %}
+    Trips
+{% endblock %}
+
+{% block body_block %}
+<h1>Trips</h1>
+
+
+<div>
+    {% if trips %}
+    {% for trip in trips %}
+    <h2>{{ trip.name }}</h2>
+    <h3>Date: {{ trip.date }}</h3>
+    <h4>location: {{ trip.location }} </h4>
+    <p> {{ trip.details }} <p>
+    {% endfor %}
+
+    {% else %}
+    <strong>There are no Trips</strong>
+    {%endif%}
+</div>
+
+{% endblock %}
