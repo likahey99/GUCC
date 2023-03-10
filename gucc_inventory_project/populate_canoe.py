@@ -10,6 +10,12 @@ from canoe_club.models import Trip, Kit, Social
 
 
 def populate():
+    members = [
+        {
+
+        }
+    ]
+
     trips = [
         {'name': 'name',
          'location': 'location',
@@ -45,12 +51,14 @@ def populate():
     ]
 
     for trip, trip_data in trips.items():
-        t = add_trip(name=trip_data['name'], location=trip_data['location'], date=trip_data['date'], length=trips['length'],
+        t = add_trip(name=trip_data['name'], location=trip_data['location'], date=trip_data['date'],
+                     length=trips['length'],
                      members=trip_data['members'])
 
 
 def add_trip(name, location, date, length, members):
-    t = Trip.objects.get_or_create(name=name, location=location)[0]  # because we're calling get or create you don't want information that could create duplicae copies
+    t = Trip.objects.get_or_create(name=name, location=location)[
+        0]  # because we're calling get or create you don't want information that could create duplicate copies
     t.date = date
     t.length = length
     t.members = members
@@ -67,14 +75,15 @@ def add_social(name, date, details, location):
     return s
 
 
-def add_kit(name, size, colour, brand, owner, type, maintenance_problem, amount):
+def add_kit(name, size, colour, brand, owner, type, maintenance_problem, amount=0):
     k = Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, type=type)
-    k.maintenance_problem = maintenance_problem
+    if maintenance_problem is not None:
+        k.maintenance_problem = maintenance_problem
     k.amount = amount + 1
     k.save()
     return k
 
 
 if __name__ == '__main__':
-    print('Starting Canoe population script...')
+    print('Starting canoe population script...')
     populate()
