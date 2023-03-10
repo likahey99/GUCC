@@ -5,7 +5,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from canoe_club.models import Trip, Social, Kit, UserProfile, User
 import datetime
-from .forms import UserForm, UserProfileForm
+from .forms import UserForm, UserProfileForm, UserUpdateForm, PasswordUpdateForm, PasswordResetForm
+from .decorators import user_not_authenticated
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes
 
 def index(request):
     today = datetime.datetime.today()
@@ -67,11 +73,76 @@ def user_profile(request,username):
 
     return render(request,"canoe_club/profile.html",{"selected_user":selected_user,"profile":profile})
 
+@login_required
 def change_password(request):
-    return render(request, 'canoe_club/change_password.html')
+    print("password")
+    passsword_changed = False
+    if request.method == "POST":
+        form = PasswordUpdateForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            passsword_changed = True
+        else:
+            print(form.errors)
+    else:
+        form = PasswordUpdateForm(request.user)
+    return render(request, 'accounts/change_password.html', {"form":form, "password_changed":passsword_changed})
 
+@user_not_authenticated
+def reset_password(request):
+    email_sent = False
+    if request.method == "POST":
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            user_email = form.cleaned_data["email"]
+            user_data = User.objects.get(email__exact=user_email)
+            if user_data:
+                subject = "Password Reset Request"
+                message = render_to_string("password_reset_templates/password_reset_template.html", {
+                    "user": user_data,
+                    "domain": get_current_site(request).domain,
+                    "user_id": urlsafe_base64_encode(force_bytes(user_data.pk)),
+                    "protocol": "https" if request.is_secure() else "http"
+                })
+
+                email = EmailMessage(subject,message, to=[user_email])
+                if email.send():
+                    email_sent = True
+                else:
+                    print("Problem sending email...")
+            else:
+                return redirect(reverse("canoe_club:index"))
+    else:
+        form = PasswordResetForm()
+
+    return render(request, "accounts/reset_password.html", {"form":form, "email_sent":email_sent})
+def password_reset_confirm(request, uidb64):
+    password_changed = False
+    try:
+        user_id = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=user_id)
+    except:
+        user = None
+    if user:
+        if request.method == 'POST':
+            form = PasswordResetForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                password_changed = True
+            else:
+                print(form.errors)
+        else:
+            form = PasswordUpdateForm(user)
+        return render(request, 'password_reset_templates/password_reset_confirm.html', {'form': form,"password_changed":password_changed})
+    else:
+        messages.error(request, "Link is expired")
+
+    messages.error(request, 'Something went wrong, redirecting back to Homepage')
+    return redirect(reverse("canoe_club:index"))
 def edit_profile(request):
-    return render(request, 'canoe_club/edit_profile.html')
+    # user_form = UserUpdateForm(request.POST, instance = request.user)
+    # profile_form = UserProfile(request.POST, instance = request.user)
+    return render(request, 'accounts/edit_profile.html')
 
 def register(request):
     registered = False

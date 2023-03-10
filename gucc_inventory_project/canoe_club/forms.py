@@ -1,12 +1,12 @@
 from django import forms
 from .models import User, UserProfile
-
+from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
     class Meta:
         model = User
-        fields = ("username", "email", "password", "is_admin", "is_member")
+        fields = ("username", "email", "password", "confirm_password", "is_admin", "is_member")
 
     def clean(self):
         cleaned_data = super(UserForm, self).clean()
@@ -16,7 +16,20 @@ class UserForm(forms.ModelForm):
         if password != confirm_password:
             raise forms.ValidationError("passwords do not match")
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "is_admin", "is_member")
+
+class PasswordUpdateForm(SetPasswordForm):
+    class Meta:
+        model = User
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ("picture",)
+
+class PasswordResetForm(PasswordResetForm):
+   def __init__(self, *args, **kwargs):
+       super(PasswordResetForm, self).__init__(*args, **kwargs)

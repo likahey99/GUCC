@@ -15,6 +15,7 @@ class User(AbstractUser):
     # base_role = ADMIN
     is_admin = models.BooleanField("is admin", default=False)
     is_member = models.BooleanField("is member", default=True)
+    email = models.EmailField(unique=True)
     # user_type = models.PositiveSmallIntegerField(choices=ROLE_CHOICES)
 
 # class MemberManager(BaseUserManager):
