@@ -4,7 +4,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'gucc_inventory_project.settings')
 
 import django
-
 django.setup()
 from canoe_club.models import Trip, Kit, Social
 
@@ -12,7 +11,7 @@ from canoe_club.models import Trip, Kit, Social
 def populate():
     members = [
         {
-
+            # list of members
         }
     ]
 
@@ -39,7 +38,7 @@ def populate():
          }
     ]
 
-    kit = [
+    kits = [
         {'name': 'name',
          'size': 0,
          'colour': 'red',
@@ -47,13 +46,19 @@ def populate():
          'owner': 'owner',
          'type': 'type',
          'maintenance problem': 'maintenance problem',
-         'amount': 0}
+         'amount': 0,
+         'image': 'image'}
     ]
 
-    for trip, trip_data in trips.items():
-        t = add_trip(name=trip_data['name'], location=trip_data['location'], date=trip_data['date'],
-                     length=trips['length'],
-                     members=trip_data['members'])
+    for trip in trips:
+        t = add_trip(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
+
+    for social in socials:
+        s = add_social(social['name'], social['date'], social['details'], social['location'])
+
+    for kit in kits:
+        k = add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['owner'], kit['type'],
+                    kit['maintenance_problem'], kit['image'], kit['amount'])
 
 
 def add_trip(name, location, date, length, members):
@@ -75,11 +80,12 @@ def add_social(name, date, details, location):
     return s
 
 
-def add_kit(name, size, colour, brand, owner, type, maintenance_problem, amount=0):
-    k = Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, type=type)
+def add_kit(name, size, colour, brand, owner, type, maintenance_problem, image, amount=0):
+    k = Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, type=type)[0]
     if maintenance_problem is not None:
         k.maintenance_problem = maintenance_problem
     k.amount = amount + 1
+    k.image = image
     k.save()
     return k
 
