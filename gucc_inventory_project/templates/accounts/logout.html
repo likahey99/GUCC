@@ -13,7 +13,11 @@
         <form id="logout_form" method="POST">
         {% csrf_token %}
             <p>Are you sure you want to logout?</p>
-            <input type="submit" value="logout"/>
+            <div class="justify-content-center">
+              <a href="{% url 'canoe_club:index' %}">
+                <button class="w-25 btn btn-lg btn-outline-light" href="{% url 'canoe_club:index' %}" type="submit">Logout</button>
+              </a>
+              </div>
         </form>
     </div>
     {% else %}

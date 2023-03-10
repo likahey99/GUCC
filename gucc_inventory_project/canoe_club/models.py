@@ -18,6 +18,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     # user_type = models.PositiveSmallIntegerField(choices=ROLE_CHOICES)
 
+
 # class MemberManager(BaseUserManager):
 #     def get_queryset(self, *args, **kwargs):
 #         results = super().get_queryset(*args, **kwargs)
@@ -47,11 +48,12 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
     def __str__(self):
         return user.username
+
 
 class Trip(models.Model):
     NAME_MAX_LENGTH = 255
@@ -64,7 +66,7 @@ class Trip(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        super(Trip, self).save(*args,**kwargs)
+        super(Trip, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -78,7 +80,9 @@ class Kit(models.Model):
     brand = models.CharField(max_length=20)
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)  # link to member id
     type = models.CharField(max_length=20)
-    maintenance_problem = models.CharField(max_length=20)
+    maintenance_problem = models.CharField(null=True, blank=True, max_length=20)
+    amount = models.IntegerField(default=0)
+    image = models.ImageField(upload_to='kit_images', blank=True)
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):

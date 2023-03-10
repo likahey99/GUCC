@@ -18,7 +18,7 @@ def index(request):
     trips_list = Trip.objects.filter(date__gte=today).order_by("date")[:5]
     social_list = Social.objects.filter(date__gte=today).order_by("date")[:5]
 
-    print(social_list)
+    # print(social_list)
     context_dixt = {}
     context_dixt["trips"] = trips_list
     context_dixt["socials"] = social_list
