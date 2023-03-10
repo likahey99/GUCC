@@ -1,5 +1,7 @@
 from django import forms
 from .models import User, UserProfile
+from .models import Kit
+
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -33,3 +35,21 @@ class UserProfileForm(forms.ModelForm):
 class PasswordResetForm(PasswordResetForm):
    def __init__(self, *args, **kwargs):
        super(PasswordResetForm, self).__init__(*args, **kwargs)
+
+
+#for add_kit template
+#setting up the form
+class KitForm(forms.ModelForm):
+    NAME_MAX_LENGTH = 40
+    name = forms.CharField(max_length=NAME_MAX_LENGTH)
+    size = forms.IntegerField()
+    colour = forms.CharField(max_length=20)
+    brand = forms.CharField(max_length=20)
+    type = forms.CharField(max_length=20)
+    maintenance_problem = forms.CharField(max_length=20)
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False) 
+
+    class Meta:
+        model = Kit
+
+        exclude = ('owner',)

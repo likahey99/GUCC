@@ -5,14 +5,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from canoe_club.models import Trip, Social, Kit, UserProfile, User
 import datetime
-from .forms import UserForm, UserProfileForm, UserUpdateForm, PasswordUpdateForm, PasswordResetForm
+from .forms import UserForm, UserProfileForm, UserUpdateForm, PasswordUpdateForm, PasswordResetForm, KitForm
 from .decorators import user_not_authenticated
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
-
 def index(request):
     today = datetime.datetime.today()
     trips_list = Trip.objects.filter(date__gte=today).order_by("date")[:5]
@@ -34,7 +33,17 @@ def main_shed(request):
     return render(request, 'canoe_club/main_shed.html')
 
 def add_kit(request):
-    return render(request, 'canoe_club/add_kit.html')
+    form = KitForm()
+
+    if request.method == "POST":
+        form = KitForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return render(request, 'canoe_club/add_kit.html')
+        else:
+            print(forms.errors)
+    return render(request, 'canoe_club/add_kit.html', {'form':form})
 
 def remove_kit(request):
     return render(request, 'canoe_club/remove_kit.html')
