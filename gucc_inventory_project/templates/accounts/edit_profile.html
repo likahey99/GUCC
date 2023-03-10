@@ -1,0 +1,23 @@
+{% extends "canoe_club/base.html" %}
+{% load staticfiles %}
+{% endblock %}
+{% block body_block %}
+<div class="container">
+  <h1>Edit Profile</h1>
+</div>
+
+    <div class="container">
+      <div class="row">
+      {% if user.profile.picture %}
+        <img src ="{{ MEDIA_URL }}{{ user.profile.picture.url }}" alt="" width="200" height="200"
+             alt="{{ user.username }}'s profile image" />
+      {% else %}
+        <img src="{% static 'images/default_user_profile.jpg' %}" width="200" height="200">
+      {% endif %}
+        <br/>
+        </div>
+        <br/>
+    </div>
+
+    {% endif %}
+{% endblock %}

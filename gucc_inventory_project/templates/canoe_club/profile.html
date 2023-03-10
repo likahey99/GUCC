@@ -12,8 +12,7 @@
     <div class="container">
       <div class="row">
       {% if profile.picture %}
-        <img src ="{{ MEDIA_URL }}{{ profile.picture.url }}" alt="" width="200" height="200"
-             alt="{{ selected_user.username }}'s profile image" />
+        <img src ="{{ MEDIA_URL }}{{ profile.picture.url }}" alt="{{ selected_user.username }}'s profile image" width="200" height="200"/>
       {% else %} 
         <img src="{% static 'images/default_user_profile.jpg' %}" width="200" height="200">
       {% endif %}
@@ -22,7 +21,7 @@
         <br/>
        
     {% if selected_user == user %}
-      <form method="post" action="{% url 'canoe_club:edit_profile' selected_user.username %}">
+      <form method="post" action="{% url 'canoe_club:edit_profile' %}">
       {% csrf_token %}
       <input type="submit" value="edit profile" />
       </form>

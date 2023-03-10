@@ -15,7 +15,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     user_info.short_description = 'Info'
 class UserAdmin(admin.ModelAdmin):
     model = User
-    fields = ["username"]
+    fields = ["username","email"]
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(User,UserAdmin)
 
