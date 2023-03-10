@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from canoe_club.models import Trip, Social, Kit, UserProfile, User
 import datetime
 from .forms import UserForm, UserProfileForm
+from .forms import KitForm
 
 def index(request):
     today = datetime.datetime.today()
@@ -28,7 +29,17 @@ def main_shed(request):
     return render(request, 'canoe_club/main_shed.html')
 
 def add_kit(request):
-    return render(request, 'canoe_club/add_kit.html')
+    form = KitForm()
+
+    if request.method == "POST":
+        form = KitForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return render(request, 'canoe_club/add_kit.html')
+        else:
+            print(forms.errors)
+    return render(request, 'canoe_club/add_kit.html', {'form':form})
 
 def remove_kit(request):
     return render(request, 'canoe_club/remove_kit.html')

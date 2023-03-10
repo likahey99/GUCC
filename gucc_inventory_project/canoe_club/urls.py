@@ -19,7 +19,7 @@ urlpatterns = [
     # path('maintenance_shed/kit/move_kit/', views.move_kit, name='move_kit'),#has view can be java script alert on button
 
     path('main_shed/', views.main_shed, name='main_shed'), #has view
-    path('main_shed/kit/add_kit/', views.add_kit, name='add_kit'), #has
+    path('main_shed/add_kit/', views.add_kit, name='add_kit'), #has
     path('main_shed/kit/remove_kit/', views.remove_kit, name='remove_kit'), #has view
     # path('main_shed/kit/move_shed/', views.move_shed, name='move_shed'), #has view can be java script alert on button
 

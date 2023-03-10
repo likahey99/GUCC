@@ -72,7 +72,7 @@ class Trip(models.Model):
 class Kit(models.Model):
     NAME_MAX_LENGTH = 40
     name = models.CharField(max_length=NAME_MAX_LENGTH)
-    size = models.IntegerField(default=0)
+    size = models.IntegerField()
     colour = models.CharField(max_length=20)
     brand = models.CharField(max_length=20)
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)  # link to member id
