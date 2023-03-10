@@ -21,10 +21,16 @@
         <br/>
        
     {% if selected_user == user %}
-      <form method="post" action="{% url 'canoe_club:edit_profile' %}">
-      {% csrf_token %}
-      <input type="submit" value="edit profile" />
-      </form>
+        <div class="row">
+          <form method="post" action="{% url 'canoe_club:edit_profile' %}">
+          {% csrf_token %}
+          <input type="submit" value="edit profile" />
+          </form>
+          <form method="post" action="{% url 'canoe_club:change_password' %}">
+          {% csrf_token %}
+          <input type="submit" value="change password" />
+          </form>
+        </div>
     </div>
     {% endif %}
 {% endblock %}

@@ -11,7 +11,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, force_str
 
 def index(request):
     today = datetime.datetime.today()
@@ -101,7 +101,7 @@ def reset_password(request):
                 message = render_to_string("password_reset_templates/password_reset_template.html", {
                     "user": user_data,
                     "domain": get_current_site(request).domain,
-                    "user_id": urlsafe_base64_encode(force_bytes(user_data.pk)),
+                    "user_id": urlsafe_base64_encode(force_bytes(user_data.username)),
                     "protocol": "https" if request.is_secure() else "http"
                 })
 
@@ -118,14 +118,14 @@ def reset_password(request):
     return render(request, "accounts/reset_password.html", {"form":form, "email_sent":email_sent})
 def password_reset_confirm(request, uidb64):
     password_changed = False
+    username = force_str(urlsafe_base64_decode(uidb64))
     try:
-        user_id = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=user_id)
+        user = User.objects.get(username=username)
     except:
-        user = None
+        return HttpResponse("Link invalid" + username)
     if user:
         if request.method == 'POST':
-            form = PasswordResetForm(user, request.POST)
+            form = PasswordUpdateForm(user, request.POST)
             if form.is_valid():
                 form.save()
                 password_changed = True
@@ -135,10 +135,8 @@ def password_reset_confirm(request, uidb64):
             form = PasswordUpdateForm(user)
         return render(request, 'password_reset_templates/password_reset_confirm.html', {'form': form,"password_changed":password_changed})
     else:
-        messages.error(request, "Link is expired")
+        return HttpResponse("Link has expired")
 
-    messages.error(request, 'Something went wrong, redirecting back to Homepage')
-    return redirect(reverse("canoe_club:index"))
 def edit_profile(request):
     # user_form = UserUpdateForm(request.POST, instance = request.user)
     # profile_form = UserProfile(request.POST, instance = request.user)

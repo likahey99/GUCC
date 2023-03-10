@@ -30,7 +30,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'canoeclub2023@gmail.com'
+EMAIL_HOST_PASSWORD = 'Django123'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+LOGIN_URL = '/canoe_club/login/'
 
 # Application definition
 
