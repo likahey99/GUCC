@@ -2,6 +2,13 @@
 {% load staticfiles %}
 <head>
     <style>
+        body {
+          display: flex;
+          align-items: center;
+          padding-top: 40px;
+          padding-bottom: 40px;
+          background-color: #f5f5f5;
+        }
         .form-signin {
           width: 100%;
           max-width: 330px;
@@ -17,7 +24,7 @@
           z-index: 2;
         }
 
-        .form-signin input[type="email"] {
+        .form-signin input[type="text"] {
           margin-bottom: -1px;
           border-bottom-right-radius: 0;
           border-bottom-left-radius: 0;
@@ -28,7 +35,6 @@
           border-top-left-radius: 0;
           border-top-right-radius: 0;
         }
-
     </style>
 </head>
 
@@ -41,29 +47,40 @@
     <strong>You are already logged in! <a href = "{% url 'canoe_club:index' %}">Return home</a></strong>
 {% else %}
 
-<body class="text-center" style="display: flex; align-items: center; padding-top: 40px; padding-bottom: 40px; background-color: #f5f5f5;">
-<main class="form-signin w-100 m-auto bg-info">
-  <form id="login_form" method="post" action="{% url 'canoe_club:login' %}">
-      {% csrf_token %}
-      <img class="mb-4" src="{% static 'images/canoe_club_logo.jpg' %}" alt="" width="72" height="57">
+<body class="text-center d-block">
+    <div class="container w-50 d-flex justify-content-md-center align-items-center h-75">
+    <div class="mt-5">
+        <main class="form-signin w-100 bg-info rounded">
+          <form id="login_form" method="post" action="{% url 'canoe_club:login' %}" class="">
+              {% csrf_token %}
+              <img class="mb-4 rounded mt-3" src="{% static 'images/canoe_club_logo.jpg' %}" alt="" width="72" height="57">
 
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+              <h1 class="h3 mb-3 display-5">Sign in</h1>
 
-      <div class="form-floating">
-          <label for="floatingInput" class="sr-only">Username</label>
-          <input type="text" class="form-control" id="floatingInput" name="username" value="" size="50" placeholder="Username">
-      </div>
-      <div class="form-floating">
-          <label for="floatingPassword" class="sr-only">Password</label>
-          <input type="password" class="form-control" name="password" id="floatingPassword" value="" size="50" placeholder="Password">
-      </div>
-      <button class="w-100 btn btn-lg btn-primary mt-4" type="submit" value="submit">Sign in</button>
-      <a href="{% url 'canoe_club:index' %}">
-        <button class="w-50 btn btn-lg btn-outline-light mt-4 mb-4" href="{% url 'canoe_club:index' %}" type="button">Home</button>
-      </a>
-      <p class="mt-5 mb-3 text-muted">&copy; GUCC 2023</p>
-  </form>
-    {% endif %}
-</main>
+              <div class="form-floating d-flex justify-content-center" style="">
+                  <label for="floatingInput" class="sr-only">Username</label>
+                  <input type="text" class="form-control w-75 " id="floatingInput" name="username" value="" size="50" placeholder="Username">
+              </div>
+              <div class="form-floating d-flex justify-content-center">
+                  <label for="floatingPassword" class="sr-only">Password</label>
+                  <input type="password" class="form-control w-75" name="password" id="floatingPassword" value="" size="50" placeholder="Password">
+              </div>
+              <button class="w-25 btn btn-lg btn-outline-dark" type="submit" value="submit">Sign in</button>
+{#              <h3>Or</h3>#}
+              <a href="{% url 'canoe_club:index' %}">
+                <button class="w-25 btn btn-lg btn-outline-dark mt-2 mb-2" href="{% url 'canoe_club:index' %}" type="button">Register</button>
+              </a>
+              <div class="justify-content-center">
+              <a href="{% url 'canoe_club:index' %}">
+                <button class="w-25 btn btn-lg btn-outline-light mt-2 mb-2" href="{% url 'canoe_club:index' %}" type="button">Home</button>
+              </a>
+              </div>
+              <p class="mt-3 mb-3 text-muted">&copy; GUCC 2023</p>
+          </form>
+            {% endif %}
+        </main>
+    </div>
+    </div>
+</body>
 
 {% endblock %}
