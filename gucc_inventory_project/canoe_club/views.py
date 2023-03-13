@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
+
 def index(request):
     today = datetime.datetime.today()
     trips_list = Trip.objects.filter(date__gte=today).order_by("date")[:5]
@@ -30,7 +31,28 @@ def about(request):
 
 
 def main_shed(request):
-    return render(request, 'canoe_club/main_shed.html')
+    wetsuit = Kit()
+    wetsuit.amount = 30
+    print(request.method)
+    if request.method == 'POST':
+        change = request.POST['change']
+        print(change)
+        if change == '-1':
+            print('test')
+            wetsuit.amount -= 1
+            print(wetsuit.amount)
+        elif change == '1':
+            print('test+')
+            wetsuit.amount += 1
+            print(wetsuit.amount)
+        elif change == 'move':
+            print('mooove')
+            # move_kit(request)
+        elif change == 'remove':
+            print('remo#ove')
+            # remove_kit(request)
+
+    return render(request, 'canoe_club/main_shed.html', {'kit_list': [wetsuit]})
 
 def add_kit(request):
     form = KitForm()
@@ -53,7 +75,28 @@ def move_shed(request):
 
 
 def maintenance_shed(request):
-    return render(request, 'canoe_club/maintenance_shed.html')
+    wetsuit = Kit()
+    wetsuit.amount = 30
+    print(request.method)
+    if request.method == 'POST':
+        change = request.POST['change']
+        print(change)
+        if change == '-1':
+            print('test')
+            wetsuit.amount -= 1
+            print(wetsuit.amount)
+        elif change == '1':
+            print('test+')
+            wetsuit.amount += 1
+            print(wetsuit.amount)
+        elif change == 'move':
+            print('mooove')
+            # move_kit(request)
+        elif change == 'remove':
+            print('remo#ove')
+            # remove_kit(request)
+
+    return render(request, 'canoe_club/maintenance_shed.html', {'kit_list': [wetsuit]})
 
 def kit(request, kit_name_slug):
 

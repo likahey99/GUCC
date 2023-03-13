@@ -64,7 +64,7 @@
 
 {% block body_block %}
 {% if registered %}
-    <strong>You are already Registered! <a href = "{% url 'canoe_club:index' %}">Return home</a></strong>
+    <strong>You Have Registered! <a href = "{% url 'canoe_club:index' %}">Return home</a></strong>
 {% else %}
 
 <body class="text-center d-block">
@@ -87,7 +87,7 @@
 {#                  <label for="floatingPassword" class="sr-only">Password</label>#}
 {#                  <input type="password" class="form-control w-75" name="password" id="floatingPassword" value="" size="50" placeholder="Password">#}
 {#              </div>#}
-              <button class="w-25 btn btn-lg btn-outline-dark mt-2" type="submit" value="submit">Register</button>
+              <button class="w-25 btn btn-lg btn-outline-dark mt-2" type="submit" value="Register">Register</button>
               <div class="justify-content-center">
               <a href="{% url 'canoe_club:index' %}">
                 <button class="w-25 btn btn-lg btn-outline-light mt-2 mb-2" href="{% url 'canoe_club:index' %}" type="button">Home</button>
