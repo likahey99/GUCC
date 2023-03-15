@@ -20,11 +20,12 @@ urlpatterns = [
 
     path('maintenance_shed/', views.maintenance_shed, name='maintenance_shed'), #has view
     #in design spec kit was item but we have changed it here
-    path('maintenance_shed/kit/', views.kit, name='maintenance_shed_kit'), #has view
+    path('maintenance_shed/<kit_name_slug>/', views.kit, name='maintenance_shed_kit'), #has view
     # path('maintenance_shed/kit/move_kit/', views.move_kit, name='move_kit'),#has view can be java script alert on button
 
     path('main_shed/', views.main_shed, name='main_shed'), #has view
-    path('main_shed/add_kit/', views.add_kit, name='add_kit'), #has
+    path('main_shed/kit/<kit_name_slug>/', views.kit, name='main_shed_kit'), #has view
+    path('main_shed/add_kit/', views.add_kit, name='add_kit'),
     path('main_shed/kit/remove_kit/', views.remove_kit, name='remove_kit'), #has view
     # path('main_shed/kit/move_shed/', views.move_shed, name='move_shed'), #has view can be java script alert on button
 

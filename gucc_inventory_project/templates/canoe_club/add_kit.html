@@ -3,44 +3,6 @@
 {% load staticfiles %}
 
 <html>
-<style>
-    input[type=text], select 
-    {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    
-    input[type=submit] 
-    {
-      width: 100%;
-      background-color: #4CAF50;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
-    input[type=submit]:hover 
-    {
-      background-color: #45a049;
-    }
-    
-    div 
-    {
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
-    }
-    </style>
-    <body>
-
 {% block title_block %}
     add_kit
 {% endblock %}
@@ -51,22 +13,27 @@
         </head>
 
         <body>
-            <h3>Add Kit</h3>
-            <div>
-                <form id="add_kit" method="post" action="/main_shed/add_kit">
-                    {% csrf_token %} 
-                    {% for hidden in forms.hidden_fields %} 
-                        {{ hidden }} 
-                    {% endfor %} 
+            <div class="container text-center w-50 justify-content-md-center h-75 rounded" style="background-color: rgba(0,0,0,0.35); color: white;">
+                <div class="mt-5 align-items-center"></div>    
+                <form id="add_kit" method="post" action="{% url 'canoe_club:add_kit' %}" class="">
+                        {% csrf_token %} 
+                        <img class="mb-4 rounded mt-3" src="{% static 'images/canoe_club_logo.jpg' %}" alt="" width="72" height="57">
+        
+                        <h1 class="h3 mb-3 display-5">Add Kit</h1>
+                        {% for hidden in forms.hidden_fields %} 
+                            {{ hidden }} 
+                        {% endfor %} 
 
-                    {% for field in form.visible_fields %} 
-                        {{ field.errors }} 
-                        {{ field.help_text }} 
-                        {{ field }}
-                        <br>
-                    {% endfor %} 
-                    <input type="submit" name = "submit" value="Add Kit" />
-                </form>
+                        {% for field in form.visible_fields %} 
+                            <div class="p-2"></div>
+                            <label class="">{{field.name}}</label>
+                            {{ field.errors }} 
+                            {{ field.help_text }} 
+                            {{ field }}
+                            <br>
+                        {% endfor %} 
+                        <button class="w-25 btn btn-lg btn-outline-light mt-4 mb-2" type="submit" value="submit">Submit</button>                    </form>
+                </div>
             </div>
         </body>
     </html>

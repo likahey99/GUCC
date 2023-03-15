@@ -1,4 +1,4 @@
-{% extends "canoe_club/base" %}
+{% extends "canoe_club/base.html" %}
 {% load staticfiles %}
 {% block title_block %}
 View Kit
@@ -28,6 +28,8 @@ View Kit
         {% endif %}
         {% if kit.maintenance_problem  %}
         <h4> {{ kit.maintenance_problem }} </h4>>
+        {% endif %}
+        
     </div>
 </div>
 
@@ -52,3 +54,6 @@ View Kit
 <div>
     <strong>This piece of kit does not exit</strong>
 </div>
+{% endif %}
+
+{% endblock %}

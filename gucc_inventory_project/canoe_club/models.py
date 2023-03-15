@@ -74,7 +74,7 @@ class Trip(models.Model):
 
 class Kit(models.Model):
     NAME_MAX_LENGTH = 40
-    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True, primary_key=True)
     size = models.IntegerField()
     colour = models.CharField(max_length=20)
     brand = models.CharField(max_length=20)

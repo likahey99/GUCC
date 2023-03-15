@@ -56,15 +56,16 @@ def main_shed(request):
 
 def add_kit(request):
     form = KitForm()
-
+    print(request.method)
     if request.method == "POST":
         form = KitForm(request.POST)
 
         if form.is_valid():
             form.save(commit=True)
-            return render(request, 'canoe_club/add_kit.html')
+            kit = Kit.objects.get(name = form.cleaned_data['name'])
+            return redirect(reverse("canoe_club:main_shed_kit",kwargs={"kit_name_slug":kit.slug}))
         else:
-            print(forms.errors)
+            print(form.errors)
     return render(request, 'canoe_club/add_kit.html', {'form':form})
 
 def remove_kit(request):
@@ -99,7 +100,7 @@ def maintenance_shed(request):
     return render(request, 'canoe_club/maintenance_shed.html', {'kit_list': [wetsuit]})
 
 def kit(request, kit_name_slug):
-
+    context_dict = {}
     try:
         kit = Kit.objects.get(slug = kit_name_slug)
         context_dict["kit"] = kit
