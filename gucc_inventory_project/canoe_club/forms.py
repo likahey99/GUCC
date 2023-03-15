@@ -1,6 +1,5 @@
 from django import forms
-from .models import User, UserProfile
-from .models import Kit
+from .models import User, UserProfile, Kit, Social
 
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 class UserForm(forms.ModelForm):
@@ -38,9 +37,14 @@ class PasswordResetForm(PasswordResetForm):
 
 
 #for add_kit template
-#setting up the form
 class KitForm(forms.ModelForm):
 
     class Meta:
         model = Kit
-        exclude = ('maintenance_problem','slug')
+        exclude = ('maintenance_problem','slug', 'maintenance')
+
+
+class SocialForm(forms.ModelForm):
+    class Meta:
+        model = Social
+        fields = ("name", "date", "details", "location")
