@@ -36,6 +36,7 @@ EMAIL_HOST_PASSWORD = 'Django123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
 LOGIN_URL = '/canoe_club/login/'
 
 # Application definition
