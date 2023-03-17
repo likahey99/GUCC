@@ -74,13 +74,14 @@ class Trip(models.Model):
 
 class Kit(models.Model):
     NAME_MAX_LENGTH = 40
-    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True, primary_key=True)
     size = models.IntegerField()
     colour = models.CharField(max_length=20)
     brand = models.CharField(max_length=20)
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)  # link to member id
     type = models.CharField(max_length=20)
     maintenance_problem = models.CharField(null=True, blank=True, max_length=20)
+    maintenance = models.BooleanField(default=True)
     amount = models.IntegerField(default=0)
     image = models.ImageField(upload_to='kit_images', blank=True)
     slug = models.SlugField()

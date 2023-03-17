@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from canoe_club.models import Trip, Social, Kit, UserProfile, User
 import datetime
-from .forms import UserForm, UserProfileForm, UserUpdateForm, PasswordUpdateForm, PasswordResetForm, KitForm
+from .forms import UserForm, UserProfileForm, UserUpdateForm, PasswordUpdateForm, PasswordResetForm, KitForm, SocialForm
 from .decorators import user_not_authenticated
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
@@ -31,40 +31,42 @@ def about(request):
 
 
 def main_shed(request):
-    wetsuit = Kit()
-    wetsuit.amount = 30
-    print(request.method)
+    context_dict = {}
+    context_dict['kit_list'] = Kit.objects.filter(maintenance=True).order_by('-type')
+
     if request.method == 'POST':
-        change = request.POST['change']
+        change = request.POST['change'].split(',')
         print(change)
-        if change == '-1':
-            print('test')
-            wetsuit.amount -= 1
-            print(wetsuit.amount)
-        elif change == '1':
-            print('test+')
-            wetsuit.amount += 1
-            print(wetsuit.amount)
-        elif change == 'move':
+        kit_clicked = Kit.objects.get(slug=change[0])
+        if change[1] == '-1':
+            if kit_clicked.amount != 0:
+                kit_clicked.amount -= 1
+                kit_clicked.save()
+        elif change[1] == '1':
+            kit_clicked.amount += 1
+            kit_clicked.save()
+            print(kit_clicked.amount)
+        elif change[1] == 'move':
             print('mooove')
             # move_kit(request)
-        elif change == 'remove':
+        elif change[1] == 'remove':
             print('remo#ove')
             # remove_kit(request)
 
-    return render(request, 'canoe_club/main_shed.html', {'kit_list': [wetsuit]})
+    return render(request, 'canoe_club/main_shed.html', context_dict)
 
 def add_kit(request):
     form = KitForm()
-
+    print(request.method)
     if request.method == "POST":
         form = KitForm(request.POST)
 
         if form.is_valid():
             form.save(commit=True)
-            return render(request, 'canoe_club/add_kit.html')
+            kit = Kit.objects.get(name = form.cleaned_data['name'])
+            return redirect(reverse("canoe_club:main_shed_kit",kwargs={"kit_name_slug":kit.slug}))
         else:
-            print(forms.errors)
+            print(form.errors)
     return render(request, 'canoe_club/add_kit.html', {'form':form})
 
 def remove_kit(request):
@@ -75,31 +77,32 @@ def move_shed(request):
 
 
 def maintenance_shed(request):
-    wetsuit = Kit()
-    wetsuit.amount = 30
-    print(request.method)
+    context_dict = {}
+    context_dict['kit_list'] = Kit.objects.filter(maintenance = True).order_by('-type')
+
     if request.method == 'POST':
-        change = request.POST['change']
+        change = request.POST['change'].split(',')
         print(change)
-        if change == '-1':
-            print('test')
-            wetsuit.amount -= 1
-            print(wetsuit.amount)
-        elif change == '1':
-            print('test+')
-            wetsuit.amount += 1
-            print(wetsuit.amount)
-        elif change == 'move':
+        kit_clicked = Kit.objects.get(slug = change[0])
+        if change[1] == '-1':
+            if kit_clicked.amount != 0:
+                kit_clicked.amount -= 1
+                kit_clicked.save()
+        elif change[1] == '1':
+            kit_clicked.amount += 1
+            kit_clicked.save()
+            print(kit_clicked.amount)
+        elif change[1] == 'move':
             print('mooove')
             # move_kit(request)
-        elif change == 'remove':
+        elif change[1] == 'remove':
             print('remo#ove')
             # remove_kit(request)
 
-    return render(request, 'canoe_club/maintenance_shed.html', {'kit_list': [wetsuit]})
+    return render(request, 'canoe_club/maintenance_shed.html', context_dict)
 
 def kit(request, kit_name_slug):
-
+    context_dict = {}
     try:
         kit = Kit.objects.get(slug = kit_name_slug)
         context_dict["kit"] = kit
@@ -257,7 +260,17 @@ def socials(request):
     return render(request, "canoe_club/socials.html", context_dixt)
 
 def add_social(request):
-    return render(request, "canoe_club/add_social.html")
+    form = SocialForm()
+    print(request.method)
+    if request.method == "POST":
+        form = SocialForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect(reverse("canoe_club:socials"))
+        else:
+            print(form.errors)
+    return render(request, 'canoe_club/add_social.html', {'form': form})
+
 
 def remove_social(request):
     return render(request, "canoe_club/remove_social.html")

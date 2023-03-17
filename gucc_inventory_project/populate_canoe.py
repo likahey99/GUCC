@@ -16,37 +16,42 @@ def populate():
     ]
 
     trips = [
-        {'name': 'name',
-         'location': 'location',
-         'date': '05/03/2023',
-         'length': 2,
+        {'name': 'Intermediate Weekend',
+         'location': 'Inverness',
+         'date': '24/03/2023',
+         'length': 3,
          'members': '{:}'
          },
-        {'name': 'name2',
-         'location': 'location2',
-         'date': '06/03/2023',
-         'length': 3,
+        {'name': 'Beginner Day Trip',
+         'location': 'The Spean',
+         'date': '01/04/2023',
+         'length': 1,
          'members': '{:}'
          }
     ]
 
     socials = [
-        {'name': 'name',
-         'date': 'date',
-         'details': 'details',
-         'location': 'location'
+        {'name': 'St Paddys',
+         'date': '17/03/2023',
+         'details': 'A big night out meet at 8pm',
+         'location': "Bank street"
+         },
+        {'name': 'Chill Potluck',
+         'date': '05/04/2023',
+         'details': 'A chill potluck where everyone brings food to share and chill ',
+         'location': "Kai's Flat"
          }
     ]
 
     kits = [
-        {'name': 'name',
+        {'name': 'club_paddle',
          'size': 0,
          'colour': 'red',
-         'brand': 'brand',
-         'owner': 'owner',
-         'type': 'type',
-         'maintenance problem': 'maintenance problem',
-         'amount': 0,
+         'brand': 'Palm',
+         'owner': 'Club',
+         'type': 'paddle',
+         'maintenance problem': 'N/A',
+         'amount': 4,
          'image': 'image'}
     ]
 

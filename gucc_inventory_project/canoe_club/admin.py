@@ -1,5 +1,5 @@
 from django.contrib import admin
-from canoe_club.models import UserProfile, User
+from canoe_club.models import UserProfile, User, Kit
 # Register your models here.
 class UserProfileAdmin(admin.ModelAdmin):
     model = UserProfile
@@ -13,9 +13,11 @@ class UserProfileAdmin(admin.ModelAdmin):
         return queryset
 
     user_info.short_description = 'Info'
+
 class UserAdmin(admin.ModelAdmin):
     model = User
     fields = ["username","email"]
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(User,UserAdmin)
+admin.site.register(Kit)
 
