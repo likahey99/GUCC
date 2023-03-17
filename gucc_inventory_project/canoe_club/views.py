@@ -31,28 +31,29 @@ def about(request):
 
 
 def main_shed(request):
-    wetsuit = Kit()
-    wetsuit.amount = 30
-    print(request.method)
+    context_dict = {}
+    context_dict['kit_list'] = Kit.objects.filter(maintenance=True).order_by('-type')
+
     if request.method == 'POST':
-        change = request.POST['change']
+        change = request.POST['change'].split(',')
         print(change)
-        if change == '-1':
-            print('test')
-            wetsuit.amount -= 1
-            print(wetsuit.amount)
-        elif change == '1':
-            print('test+')
-            wetsuit.amount += 1
-            print(wetsuit.amount)
-        elif change == 'move':
+        kit_clicked = Kit.objects.get(slug=change[0])
+        if change[1] == '-1':
+            if kit_clicked.amount != 0:
+                kit_clicked.amount -= 1
+                kit_clicked.save()
+        elif change[1] == '1':
+            kit_clicked.amount += 1
+            kit_clicked.save()
+            print(kit_clicked.amount)
+        elif change[1] == 'move':
             print('mooove')
             # move_kit(request)
-        elif change == 'remove':
+        elif change[1] == 'remove':
             print('remo#ove')
             # remove_kit(request)
 
-    return render(request, 'canoe_club/main_shed.html', {'kit_list': [wetsuit]})
+    return render(request, 'canoe_club/main_shed.html', context_dict)
 
 def add_kit(request):
     form = KitForm()

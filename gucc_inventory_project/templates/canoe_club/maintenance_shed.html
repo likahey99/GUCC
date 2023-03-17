@@ -11,11 +11,11 @@
 
     <div class="container p-3" style="flex-direction: column;">
         {% for kit in kit_list %}
-            <div class="row">
+            <div class="row m-3">
                 <div class="col-sm-3">
                     <img class="img-fluid rounded" src="{% static 'images/club_kit_photo.jpg' %}" alt="image">
                 </div>
-                <div class="col-sm-4 bg-info">
+                <div class="col-sm-4 text-white" style="background-color: rgba(0,0,0,0.25);">
                     <h4>{{ kit.name }}</h4>
                     <p>{{ kit.maintenance_problem }}</p>
                 </div>
