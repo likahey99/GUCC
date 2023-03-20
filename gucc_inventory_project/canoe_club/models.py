@@ -7,48 +7,11 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 
 class User(AbstractUser):
-    # ADMIN = 1
-    # MEMBER = 2
-    # ROLE_CHOICES = ((ADMIN, 'Admin'),
-    #                 (MEMBER, 'Member'))
-    # 
-    # base_role = ADMIN
     is_admin = models.BooleanField("is admin", default=False)
     is_member = models.BooleanField("is member", default=True)
     email = models.EmailField(unique=True)
-    # user_type = models.PositiveSmallIntegerField(choices=ROLE_CHOICES)
-
-
-# class MemberManager(BaseUserManager):
-#     def get_queryset(self, *args, **kwargs):
-#         results = super().get_queryset(*args, **kwargs)
-#         return results.filter(user_type=User.MEMBER)
-# 
-# 
-# class AdminManager(BaseUserManager):
-#     def get_queryset(self, *args, **kwargs):
-#         results = super().get_queryset(*args, **kwargs)
-#         return results.filter(user_type=User.ADMIN)
-# 
-# 
-# class Member(User):
-#     base_role = User.MEMBER
-#     member = MemberManager()
-# 
-#     class Meta:
-#         proxy = True
-# 
-# 
-# class Admin(User):
-#     base_role = User.ADMIN
-#     admin = AdminManager()
-# 
-#     class Meta:
-#         proxy = True
-
-
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     picture = models.ImageField(upload_to="profile_images", blank=True)
 
     def __str__(self):
