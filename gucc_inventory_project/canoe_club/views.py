@@ -265,7 +265,7 @@ def user_logout(request):
 
 def socials(request):
     today = datetime.datetime.today()
-    social_list = Social.objects.order_by("-date")
+    social_list = Social.objects.order_by("date")
     context_dixt = {}
     context_dixt["socials"] = social_list
     return render(request, "canoe_club/socials.html", context_dixt)

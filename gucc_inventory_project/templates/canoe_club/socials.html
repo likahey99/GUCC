@@ -5,22 +5,35 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Socials</h1>
+<h1 class="text-center" style="color: rgb(200,60,200)">Socials</h1>
 
-
-<div>
-    {% if socials %}
-    {% for social in socials %}
-    <h2>{{ social.name }}</h2>
-    <h3>Date: {{ social.date }}</h3>
-    <h4>location: {{ social.location }} </h4>
-    <p> {{ social.details }} <p>
-    {% endfor %}
-
-    {% else %}
-    <strong>There are no socials</strong>
-    {%endif%}
+<div class="d-flex justify-content-center align-items-center container">
+    <div>
+        {% if socials %}
+            {% for social in socials %}
+                {% if forloop.first %}<div class="row" style="justify-content: space-between">{% endif %}
+                        <div class="col-sm-3 p-2 m-3 text-white rounded" style="background-color: rgba(222,44,216,0.25)">
+                            <a href="" style="text-decoration: none;color: #943bc4"><h2>{{ social.name }}</h2></a>
+                            <h3>Date: {{ social.date }}</h3>
+                            <h4>location: {{ social.location }} </h4>
+                            <p> {{ social.details }} </p>
+                        </div>
+                {% if forloop.counter|divisibleby:3 %}</div><div class="row" style="justify-content: space-between">{% endif %}
+                {% if forloop.last %}</div>{% endif %}
+            {% endfor %}
+    </div>
 </div>
 
+
+    {% else %}
+        <strong>There are no upcoming socials</strong>
+    {%endif%}
+    {% if user.is_admin %}
+    <div class="text-center mt-1">
+    <a href="{% url 'canoe_club:add_social' %}" class="">
+        <button class="w-25 btn btn-lg btn-light center" type="button" style="color:rgb(255,62,224);border-color:rgb(222,44,216);">Add Social</button>
+    </a>
+    </div>
+    {% endif %}
 {% endblock %}
 
