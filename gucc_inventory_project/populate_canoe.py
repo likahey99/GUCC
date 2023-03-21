@@ -57,12 +57,16 @@ def populate():
 
     for trip in trips:
         t = add_trip(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
+        print(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
 
     for social in socials:
         s = add_social(social['name'], social['date'], social['details'], social['location'])
+        print(social['name'], social['date'], social['details'], social['location'])
 
     for kit in kits:
         k = add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['owner'], kit['type'],
+                    kit['maintenance_problem'], kit['image'], kit['amount'])
+        print(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['owner'], kit['type'],
                     kit['maintenance_problem'], kit['image'], kit['amount'])
 
 
