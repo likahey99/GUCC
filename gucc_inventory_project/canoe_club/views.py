@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from canoe_club.models import Trip, Social, Kit, UserProfile, User
 import datetime
-from .forms import UserForm, UserProfileForm, UserUpdateForm, PasswordUpdateForm, PasswordResetForm, KitForm, SocialForm
+from .forms import UserForm, UserProfileForm, UserUpdateForm, PasswordUpdateForm, PasswordResetForm, KitForm, SocialForm, TripForm
 from .decorators import user_not_authenticated
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
@@ -70,7 +70,18 @@ def add_kit(request):
     return render(request, 'canoe_club/add_kit.html', {'form':form})
 
 def remove_kit(request):
-    return render(request, 'canoe_club/remove_kit.html')
+    form = KitForm()
+    print(request.method)
+    if request.method == "POST":
+        form = KitForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            kit = Kit.objects.get(name = form.cleaned_data['name'])
+            return redirect(reverse("canoe_club:main_shed_kit",kwargs={"kit_name_slug":kit.slug}))
+        else:
+            print(form.errors)
+    return render(request, 'canoe_club/remove_kit.html', {'form':form})
 
 def move_shed(request):
     return render(request, 'canoe_club/move_shed.html')
@@ -193,24 +204,9 @@ def password_reset_confirm(request, uidb64):
         return HttpResponse("Link has expired")
 
 def edit_profile(request):
-    if request.method == "POST":
-        user_form = UserUpdateForm(request.POST, instance = request.user)
-        profile_form = UserProfileForm(request.POST, instance = request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            profile = profile_form.save(commit = False)
-            profile.user = user
-            if "picture" in request.FILES:
-                profile.picture = request.FILES["picture"]
-
-            profile.save()
-            return redirect(reverse("canoe_club:profile", args =[request.user.username]))
-    else:
-        user_form = UserUpdateForm(instance=request.user)
-        profile_form = UserProfileForm(instance=request.user.profile)
-
-    context_dict = {"user_form": user_form, "profile_form":profile_form}
-    return render(request, 'accounts/edit_profile.html',context_dict)
+    # user_form = UserUpdateForm(request.POST, instance = request.user)
+    # profile_form = UserProfile(request.POST, instance = request.user)
+    return render(request, 'accounts/edit_profile.html')
 
 def register(request):
     registered = False
@@ -317,7 +313,17 @@ def remove_trip_member(request):
     return render(request, "canoe_club/trips/trip/member/remove_member.html")
 
 def add_trip(request):
-    return render(request, "canoe_club/trips/trip/add_trip.html")
+    form = TripForm()
+    print(request.method)
+    if request.method == "POST":
+        form = TripForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect(reverse("canoe_club:trips"))
+        else:
+            print(form.errors)
+    return render(request, 'canoe_club/add_trip.html', {'form': form})
+    
 
 def remove_trip(request):
     return render(request, "canoe_club/trips/trip/remove_trip.html")

@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, UserProfile, Kit, Social
+from .models import User, UserProfile, Kit, Social, Trip
 
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 class UserForm(forms.ModelForm):
@@ -48,3 +48,8 @@ class SocialForm(forms.ModelForm):
     class Meta:
         model = Social
         fields = ("name", "date", "details", "location")
+
+class TripForm(forms.ModelForm):
+    class Meta:
+        model = Trip
+        fields = ("name", "location", "date", "length", "members")

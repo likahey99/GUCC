@@ -30,17 +30,17 @@ urlpatterns = [
     # path('main_shed/kit/move_shed/', views.move_shed, name='move_shed'), #has view can be java script alert on button
 
 
-    path('socials/', views.socials, name='socials'), #has view
-    path('socials/add_social/', views.add_social, name='add_social'),#has view
-    path('socials/remove_social/', views.remove_social, name='remove_social'),#has view
+    path('socials/', views.socials, name='socials'),
+    path('socials/add_social/', views.add_social, name='add_social'),
+    path('socials/remove_social/', views.remove_social, name='remove_social'),
 
-    path('trips/', views.trips, name='trips'), #has view
-    path('trips/trip/', views.trip, name='trip'), #has view
-    # path('trips/trip/member/', views.trip_member, name='trip_member'), #has view just viewing profile
-    path('trips/trip/add_member/', views.add_trip_member, name='add_trip_member'),#has view
-    path('trips/trip/remove_member/', views.remove_trip_member, name='remove_trip_member'),#has view
-    path('trips/trip/add_trip/', views.add_trip, name='add_trip'),#has view
-    path('trips/trip/remove_trip/', views.remove_trip, name='remove_trip'),#has view
+    path('trips/', views.trips, name='trips'),
+    path('trips/trip/', views.trip, name='trip'), 
+    # path('trips/trip/member/', views.trip_member, name='trip_member'), 
+    path('trips/trip/add_member/', views.add_trip_member, name='add_trip_member'),
+    path('trips/trip/remove_member/', views.remove_trip_member, name='remove_trip_member'),
+    path('trips/add_trip/', views.add_trip, name='add_trip'),
+    path('trips/trip/remove_trip/', views.remove_trip, name='remove_trip'),
 
 
     ]
