@@ -10,6 +10,8 @@ class User(AbstractUser):
     is_admin = models.BooleanField("is admin", default=False)
     is_member = models.BooleanField("is member", default=True)
     email = models.EmailField(unique=True)
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     picture = models.ImageField(upload_to="profile_images", blank=True)

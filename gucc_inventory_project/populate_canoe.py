@@ -4,6 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'gucc_inventory_project.settings')
 
 import django
+
 django.setup()
 from canoe_club.models import Trip, Kit, Social
 
@@ -18,13 +19,13 @@ def populate():
     trips = [
         {'name': 'Intermediate Weekend',
          'location': 'Inverness',
-         'date': '24/03/2023',
+         'date': '2023-03-24',
          'length': 3,
          'members': '{:}'
          },
         {'name': 'Beginner Day Trip',
          'location': 'The Spean',
-         'date': '01/04/2023',
+         'date': '2023-04-01',
          'length': 1,
          'members': '{:}'
          }
@@ -32,12 +33,12 @@ def populate():
 
     socials = [
         {'name': 'St Paddys',
-         'date': '17/03/2023',
+         'date': '2023-03-17',
          'details': 'A big night out meet at 8pm',
          'location': "Bank street"
          },
         {'name': 'Chill Potluck',
-         'date': '05/04/2023',
+         'date': '2023-04-05',
          'details': 'A chill potluck where everyone brings food to share and chill ',
          'location': "Kai's Flat"
          }
@@ -56,18 +57,18 @@ def populate():
     ]
 
     for trip in trips:
-        t = add_trip(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
+        add_trip(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
         print(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
 
     for social in socials:
-        s = add_social(social['name'], social['date'], social['details'], social['location'])
+        add_social(social['name'], social['date'], social['details'], social['location'])
         print(social['name'], social['date'], social['details'], social['location'])
 
     for kit in kits:
-        k = add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['owner'], kit['type'],
-                    kit['maintenance_problem'], kit['image'], kit['amount'])
+        add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['owner'], kit['type'],
+                kit['maintenance_problem'], kit['image'], kit['amount'])
         print(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['owner'], kit['type'],
-                    kit['maintenance_problem'], kit['image'], kit['amount'])
+              kit['maintenance_problem'], kit['image'], kit['amount'])
 
 
 def add_trip(name, location, date, length, members):
@@ -100,5 +101,5 @@ def add_kit(name, size, colour, brand, owner, type, maintenance_problem, image, 
 
 
 if __name__ == '__main__':
-    print('Starting canoe population script...')
+    print('Starting canoe club population script...')
     populate()
