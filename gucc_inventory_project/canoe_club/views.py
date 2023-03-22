@@ -160,9 +160,9 @@ def reset_password(request):
     if request.method == "POST":
         form = PasswordResetForm(request.POST)
         if form.is_valid():
-            user_email = form.cleaned_data["email"]
-            user_data = User.objects.get(email__exact=user_email)
-            if user_data:
+            try:
+                user_email = form.cleaned_data["email"]
+                user_data = User.objects.get(email__exact=user_email)
                 subject = "Password Reset Request"
                 message = render_to_string("password_reset_templates/password_reset_template.html", {
                     "user": user_data,
@@ -176,7 +176,7 @@ def reset_password(request):
                     email_sent = True
                 else:
                     print("Problem sending email...")
-            else:
+            except User.DoesNotExist:
                 return redirect(reverse("canoe_club:index"))
     else:
         form = PasswordResetForm()
