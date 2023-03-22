@@ -26,9 +26,9 @@ urlpatterns = [
     path('main_shed/kit/remove_kit/', views.remove_kit, name='remove_kit'),
 
     path('socials/', views.socials, name='socials'),
-    path('socials/<social_name_slug>', views.social, name='socials'),
+    path('socials/<social_name_slug>', views.social, name='social'),
     path('socials/add_social/', views.add_social, name='add_social'),
-    path('socials/remove_social/', views.remove_social, name='remove_social'),
+    path('socials/<social_name_slug>/remove_social/', views.remove_social, name='remove_social'),
 
     path('trips/', views.trips, name='trips'),
     path('trips/trip/', views.trip, name='trip'), 

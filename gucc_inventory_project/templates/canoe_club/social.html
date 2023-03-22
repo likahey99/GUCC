@@ -12,6 +12,35 @@
     <h3>Date: {{ social.date }}</h3>
     <h4>location: {{ social.location }} </h4>
     <p> {{ social.details }} <p>
+    <a href="{% url 'canoe_club:remove_social' social.slug%}">
+        <button class="w-25 btn btn-lg btn-light center" type="button" style="color:rgb(255,62,224);border-color:rgb(222,44,216);">Remove Social</button>
+    </a>
 </div>
+
+{#    {% if user.is_admin %}#}
+{##}
+{#        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Remove Social</button>#}
+{##}
+{#        <div id="myModal" class="modal fade" role="dialog">#}
+{#            <div class="modal-dialog">#}
+{#                <div class="modal-content rounded-4 shadow">#}
+{#                    <div class="modal-header border-bottom-0">#}
+{#                        <h1 class="modal-title fs-5">Are you sure?</h1>#}
+{#                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>#}
+{#                    </div>#}
+{#                    <div class="modal-body py-0">#}
+{#                        <p>Are you sure you want to delete this social?</p>#}
+{#                    </div>#}
+{#                    <div class="modal-footer flex-column border-top-0">#}
+{#                            <a href="{% url 'canoe_club:remove_social' social.slug%}">#}
+{#                                <button class="w-25 btn btn-lg btn-light center" type="button" style="color:rgb(255,62,224);border-color:rgb(222,44,216);">Remove Social</button>#}
+{#    </a>#}
+{#                        <button type="button" class="btn btn-default w-100" data-dismiss="modal">Cancel</button>#}
+{#                    </div>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#    {% endif %}#}
+
 
 {% endblock %}

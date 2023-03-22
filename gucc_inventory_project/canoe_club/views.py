@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -74,6 +74,7 @@ def add_kit(request):
     return render(request, 'canoe_club/add_kit.html', {'form': form})
 
 
+# needs done
 def remove_kit(request):
     form = KitForm()
     print(request.method)
@@ -303,9 +304,10 @@ def social(request, social_name_slug):
     return render(request, "canoe_club/social.html", context_dict)
 
 
-def add_social(request, social_name_slug):
+def add_social(request):
     try:
-        social = Social.objects.get(slug=social_name_slug)
+        print(1)
+        # social = Social.objects.get(slug=social_name_slug)
     except Social.DoesNotExist:
         return redirect(reverse("canoe_club:socials"))
     form = SocialForm()
@@ -320,8 +322,11 @@ def add_social(request, social_name_slug):
     return render(request, 'canoe_club/add_social.html', context_dict)
 
 
-def remove_social(request):
-    return render(request, "canoe_club/remove_social.html")
+def remove_social(request, social_name_slug):
+    instance = get_object_or_404(Social, slug=social_name_slug)
+    instance.delete()
+    return redirect(reverse("canoe_club:socials"))
+    # return render(request, "canoe_club/remove_social.html")
 
 
 def trips(request):
