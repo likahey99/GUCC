@@ -10,6 +10,8 @@ class User(AbstractUser):
     is_admin = models.BooleanField("is admin", default=False)
     is_member = models.BooleanField("is member", default=True)
     email = models.EmailField(unique=True)
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     picture = models.ImageField(upload_to="profile_images", blank=True)
@@ -64,6 +66,11 @@ class Social(models.Model):
     date = models.DateField()
     details = models.CharField(max_length=DETAILS_MAX_LENGTH)
     location = models.CharField(max_length=128)
+    slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Social, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

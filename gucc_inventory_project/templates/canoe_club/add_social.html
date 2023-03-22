@@ -28,12 +28,7 @@
                         {{ field }}
                         <br>
                     {% endfor %}
-                    <button class="w-25 btn btn-lg btn-outline-light mt-4 mb-2" type="submit" value="submit">Submit</button>                    </form>
-            </div>
-            <div>
-                {% if user.is_admin %}
-                <button type="button" class="btn btn-info btn-lg">Add a Social</button>
-                {% endif %}
+                    <button class="w-25 btn btn-lg btn-outline-light mt-4 mb-2" type="submit" name="submit" value="submit">Submit</button>                    </form>
             </div>
         </body>
     </html>

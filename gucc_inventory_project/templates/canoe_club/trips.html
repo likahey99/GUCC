@@ -4,25 +4,36 @@
     Trips
 {% endblock %}
 
+
 {% block body_block %}
-    <h1>Trips</h1>
+    <h1 class="text-center" style="color: rgb(200,60,200)">Socials</h1>
 
     <div>
         {% if trips %}
-        {% for trip in trips %}
-        <h2>{{ trip.name }}</h2>
-        <h3>Date: {{ trip.date }}</h3>
-        <h4>location: {{ trip.location }} </h4>
-        <p> {{ trip.details }} <p>
-        {% endfor %}
+            {% for trip in trips %}
+                {% if forloop.first %}<div class="row ml-5">{% endif %}
+                    <div class="col-3 p-2 m-3 text-white" style="background-color: rgba(222,44,216,0.25)">
+                        <h2>{{ trip.name }}</h2>
+                        <h3>Date: {{ trip.date }}</h3>
+                        <h4>location: {{ trip.location }} </h4>
+                        <p> {{ trip.details }} </p>
+                    </div>
+                {% if forloop.counter|divisibleby:3 %}</div><div class="row ml-5">{% endif %}
+                {% if forloop.last %}</div>{% endif %}
+            {% endfor %}
+            </div>
 
         {% else %}
-        <strong>There are no Trips</strong>
+            <strong>There are no upcoming trips</strong>
         {%endif%}
-
-    </div>
-
-
+        {% if user.is_admin %}
+        <div class="text-center mt-1">
+        <a href="{% url 'canoe_club:add_trip' %}" class="">
+            <button class="w-25 btn btn-lg btn-light center" type="button" style="color:rgb(255,62,224);border-color:rgb(222,44,216);">Add Social</button>
+        </a>
+        </div>
+        {% endif %}
+    {% endblock %}
 
     {% if user.is_admin %}
 
