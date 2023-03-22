@@ -220,9 +220,24 @@ def password_reset_confirm(request, uidb64):
 
 
 def edit_profile(request):
-    # user_form = UserUpdateForm(request.POST, instance = request.user)
-    # profile_form = UserProfile(request.POST, instance = request.user)
-    return render(request, 'accounts/edit_profile.html')
+    if request.method == "POST":
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            if "picture" in request.FILES:
+                profile.picture = request.FILES["picture"]
+
+            profile.save()
+            return redirect(reverse("canoe_club:profile", args=[request.user.username]))
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = UserProfileForm(instance=request.user.profile)
+
+    context_dict = {"user_form": user_form, "profile_form": profile_form}
+    return render(request, 'accounts/edit_profile.html', context_dict)
 
 
 def register(request):
