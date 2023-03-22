@@ -66,6 +66,11 @@ class Social(models.Model):
     date = models.DateField()
     details = models.CharField(max_length=DETAILS_MAX_LENGTH)
     location = models.CharField(max_length=128)
+    slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Social, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

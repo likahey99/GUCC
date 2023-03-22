@@ -1,0 +1,17 @@
+{% extends "canoe_club/base.html" %}
+
+{% block title_block %}
+{{ social.name }}
+{% endblock %}
+
+{% block body_block %}
+<h1>{{ social.name }}</h1>
+
+<div>
+    <h2>{{ social.name }}</h2>
+    <h3>Date: {{ social.date }}</h3>
+    <h4>location: {{ social.location }} </h4>
+    <p> {{ social.details }} <p>
+</div>
+
+{% endblock %}

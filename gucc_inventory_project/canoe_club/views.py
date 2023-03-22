@@ -5,13 +5,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from canoe_club.models import Trip, Social, Kit, UserProfile, User
 import datetime
-from .forms import UserForm, UserProfileForm, UserUpdateForm, PasswordUpdateForm, PasswordResetForm, KitForm, SocialForm, TripForm
+from .forms import UserForm, UserProfileForm, UserUpdateForm, PasswordUpdateForm, PasswordResetForm, KitForm, \
+    SocialForm, TripForm
 from .decorators import user_not_authenticated
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
+
 
 def index(request):
     today = datetime.datetime.today()
@@ -23,6 +25,7 @@ def index(request):
     context_dixt["trips"] = trips_list
     context_dixt["socials"] = social_list
     return render(request, 'canoe_club/index.html', context_dixt)
+
 
 # Create your views here.
 
@@ -55,6 +58,7 @@ def main_shed(request):
 
     return render(request, 'canoe_club/main_shed.html', context_dict)
 
+
 def add_kit(request):
     form = KitForm()
     print(request.method)
@@ -63,11 +67,12 @@ def add_kit(request):
 
         if form.is_valid():
             form.save(commit=True)
-            kit = Kit.objects.get(name = form.cleaned_data['name'])
-            return redirect(reverse("canoe_club:main_shed_kit",kwargs={"kit_name_slug":kit.slug}))
+            kit = Kit.objects.get(name=form.cleaned_data['name'])
+            return redirect(reverse("canoe_club:main_shed_kit", kwargs={"kit_name_slug": kit.slug}))
         else:
             print(form.errors)
-    return render(request, 'canoe_club/add_kit.html', {'form':form})
+    return render(request, 'canoe_club/add_kit.html', {'form': form})
+
 
 def remove_kit(request):
     form = KitForm()
@@ -77,11 +82,12 @@ def remove_kit(request):
 
         if form.is_valid():
             form.save(commit=True)
-            kit = Kit.objects.get(name = form.cleaned_data['name'])
-            return redirect(reverse("canoe_club:main_shed_kit",kwargs={"kit_name_slug":kit.slug}))
+            kit = Kit.objects.get(name=form.cleaned_data['name'])
+            return redirect(reverse("canoe_club:main_shed_kit", kwargs={"kit_name_slug": kit.slug}))
         else:
             print(form.errors)
-    return render(request, 'canoe_club/remove_kit.html', {'form':form})
+    return render(request, 'canoe_club/remove_kit.html', {'form': form})
+
 
 def move_shed(request):
     return render(request, 'canoe_club/move_shed.html')
@@ -89,12 +95,12 @@ def move_shed(request):
 
 def maintenance_shed(request):
     context_dict = {}
-    context_dict['kit_list'] = Kit.objects.filter(maintenance = True).order_by('-type')
+    context_dict['kit_list'] = Kit.objects.filter(maintenance=True).order_by('-type')
 
     if request.method == 'POST':
         change = request.POST['change'].split(',')
         print(change)
-        kit_clicked = Kit.objects.get(slug = change[0])
+        kit_clicked = Kit.objects.get(slug=change[0])
         if change[1] == '-1':
             if kit_clicked.amount != 0:
                 kit_clicked.amount -= 1
@@ -112,10 +118,11 @@ def maintenance_shed(request):
 
     return render(request, 'canoe_club/maintenance_shed.html', context_dict)
 
+
 def kit(request, kit_name_slug):
     context_dict = {}
     try:
-        kit = Kit.objects.get(slug = kit_name_slug)
+        kit = Kit.objects.get(slug=kit_name_slug)
         context_dict["kit"] = kit
 
     except Kit.DoesNotExist:
@@ -123,13 +130,16 @@ def kit(request, kit_name_slug):
 
     return render(request, "canoe_club/kit.html", context_dict)
 
+
 def move_kit(request, kit_name_slug):
     return render(request, "canoe_club/move_kit.html")
+
 
 def user_login(request):
     return render(request, 'canoe_club/login.html')
 
-def user_profile(request,username):
+
+def user_profile(request, username):
     try:
         selected_user = User.objects.get(username=username)
     except User.DoesNotExist:
@@ -137,7 +147,8 @@ def user_profile(request,username):
 
     profile = UserProfile.objects.get(user=selected_user)
 
-    return render(request,"canoe_club/profile.html",{"selected_user":selected_user,"profile":profile})
+    return render(request, "canoe_club/profile.html", {"selected_user": selected_user, "profile": profile})
+
 
 @login_required
 def change_password(request):
@@ -152,7 +163,8 @@ def change_password(request):
             print(form.errors)
     else:
         form = PasswordUpdateForm(request.user)
-    return render(request, 'accounts/change_password.html', {"form":form, "password_changed":passsword_changed})
+    return render(request, 'accounts/change_password.html', {"form": form, "password_changed": passsword_changed})
+
 
 @user_not_authenticated
 def reset_password(request):
@@ -171,7 +183,7 @@ def reset_password(request):
                     "protocol": "https" if request.is_secure() else "http"
                 })
 
-                email = EmailMessage(subject,message, to=[user_email])
+                email = EmailMessage(subject, message, to=[user_email])
                 if email.send():
                     email_sent = True
                 else:
@@ -181,7 +193,9 @@ def reset_password(request):
     else:
         form = PasswordResetForm()
 
-    return render(request, "accounts/reset_password.html", {"form":form, "email_sent":email_sent})
+    return render(request, "accounts/reset_password.html", {"form": form, "email_sent": email_sent})
+
+
 def password_reset_confirm(request, uidb64):
     password_changed = False
     username = force_str(urlsafe_base64_decode(uidb64))
@@ -199,14 +213,17 @@ def password_reset_confirm(request, uidb64):
                 print(form.errors)
         else:
             form = PasswordUpdateForm(user)
-        return render(request, 'password_reset_templates/password_reset_confirm.html', {'form': form,"password_changed":password_changed})
+        return render(request, 'password_reset_templates/password_reset_confirm.html',
+                      {'form': form, "password_changed": password_changed})
     else:
         return HttpResponse("Link has expired")
+
 
 def edit_profile(request):
     # user_form = UserUpdateForm(request.POST, instance = request.user)
     # profile_form = UserProfile(request.POST, instance = request.user)
     return render(request, 'accounts/edit_profile.html')
+
 
 def register(request):
     registered = False
@@ -217,16 +234,16 @@ def register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            profile = profile_form.save(commit = False)
+            profile = profile_form.save(commit=False)
             profile.user = user
             if "picture" in request.FILES:
                 profile.picture = request.FILES["picture"]
 
             profile.save()
             registered = True
-            login(request,user)
+            login(request, user)
         else:
-            print(user_form.errors,profile_form.errors)
+            print(user_form.errors, profile_form.errors)
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
@@ -237,6 +254,7 @@ def register(request):
     context_dict["registered"] = registered
     return render(request, "accounts/register.html", context_dict)
 
+
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -245,7 +263,7 @@ def user_login(request):
 
         if user:
             if user.is_active:
-                login(request,user)
+                login(request, user)
                 return redirect(reverse("canoe_club:index"))
             else:
                 return HttpResponse("Your canoe club account has been deactivated")
@@ -256,12 +274,14 @@ def user_login(request):
 
     return render(request, "accounts/login.html")
 
+
 def user_logout(request):
     if request.method == "POST":
         logout(request)
         return redirect(reverse("canoe_club:index"))
 
     return render(request, "accounts/logout.html")
+
 
 def socials(request):
     today = datetime.datetime.today()
@@ -270,9 +290,25 @@ def socials(request):
     context_dixt["socials"] = social_list
     return render(request, "canoe_club/socials.html", context_dixt)
 
-def add_social(request):
+
+def social(request, social_name_slug):
+    context_dict = {}
+    try:
+        social = Social.objects.get(slug=social_name_slug)
+        context_dict["social"] = social
+
+    except Social.DoesNotExist:
+        context_dict["social"] = None
+
+    return render(request, "canoe_club/social.html", context_dict)
+
+
+def add_social(request, social_name_slug):
+    try:
+        social = Social.objects.get(slug=social_name_slug)
+    except Social.DoesNotExist:
+        return redirect(reverse("canoe_club:socials"))
     form = SocialForm()
-    print(request.method)
     if request.method == "POST":
         form = SocialForm(request.POST)
         if form.is_valid():
@@ -280,7 +316,8 @@ def add_social(request):
             return redirect(reverse("canoe_club:socials"))
         else:
             print(form.errors)
-    return render(request, 'canoe_club/add_social.html', {'form': form})
+    context_dict = {'form': form, 'social': social}
+    return render(request, 'canoe_club/add_social.html', context_dict)
 
 
 def remove_social(request):
@@ -296,9 +333,8 @@ def trips(request):
 
 
 def trip(request, trip_name_slug):
-
     try:
-        trip = Trip.objects.get(slug = kit_name_slug)
+        trip = Trip.objects.get(slug=trip_name_slug)
         context_dict["trip"] = trip
 
     except Trip.DoesNotExist:
@@ -306,11 +342,14 @@ def trip(request, trip_name_slug):
 
     return render(request, "canoe_club/trip.html", context_dict)
 
+
 def add_trip_member(request):
     return render(request, "canoe_club/trips/trip/member/add_member.html")
 
+
 def remove_trip_member(request):
     return render(request, "canoe_club/trips/trip/member/remove_member.html")
+
 
 def add_trip(request):
     form = TripForm()
@@ -323,7 +362,7 @@ def add_trip(request):
         else:
             print(form.errors)
     return render(request, 'canoe_club/add_trip.html', {'form': form})
-    
+
 
 def remove_trip(request):
     return render(request, "canoe_club/trips/trip/remove_trip.html")
