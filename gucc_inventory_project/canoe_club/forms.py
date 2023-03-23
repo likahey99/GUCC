@@ -49,6 +49,7 @@ class SocialForm(forms.ModelForm):
         model = Social
         fields = ("name", "date", "details", "location")
 
+
 class TripForm(forms.ModelForm):
     class Meta:
         model = Trip

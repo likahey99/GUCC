@@ -4,58 +4,35 @@
     Trips
 {% endblock %}
 
-
 {% block body_block %}
-    <h1 class="text-center" style="color: rgb(200,60,200)">Socials</h1>
+    <h1 class="text-center" style="color: rgb(25,107,20)">Trips</h1>
 
-    <div>
-        {% if trips %}
-            {% for trip in trips %}
-                {% if forloop.first %}<div class="row ml-5">{% endif %}
-                    <div class="col-3 p-2 m-3 text-white" style="background-color: rgba(222,44,216,0.25)">
-                        <h2>{{ trip.name }}</h2>
-                        <h3>Date: {{ trip.date }}</h3>
-                        <h4>location: {{ trip.location }} </h4>
-                        <p> {{ trip.details }} </p>
-                    </div>
-                {% if forloop.counter|divisibleby:3 %}</div><div class="row ml-5">{% endif %}
-                {% if forloop.last %}</div>{% endif %}
-            {% endfor %}
-            </div>
-
-        {% else %}
-            <strong>There are no upcoming trips</strong>
-        {%endif%}
-        {% if user.is_admin %}
-        <div class="text-center mt-1">
-        <a href="{% url 'canoe_club:add_trip' %}" class="">
-            <button class="w-25 btn btn-lg btn-light center" type="button" style="color:rgb(255,62,224);border-color:rgb(222,44,216);">Add Social</button>
-        </a>
+    <div class="d-flex justify-content-center align-items-center container">
+        <div style="width:inherit">
+            {% if trips %}
+                {% for trip in trips %}
+                    {% if forloop.first %}<div class="row" style="justify-content: space-between">{% endif %}
+                            <div class="col-sm-3 p-2 m-3 text-white rounded" style="background-color: rgba(51,214,41,0.25)">
+                                <a href="{% url 'canoe_club:trip' trip.slug %}" style="text-decoration: none;color: #006600"><h2>{{ trip.name }}</h2></a>
+                                <h3>Date: {{ trip.date }}</h3>
+                                <h4>location: {{ trip.location }} </h4>
+                            </div>
+                    {% if forloop.counter|divisibleby:3 %}</div><div class="row" style="justify-content: space-between">{% endif %}
+                    {% if forloop.last %}</div>{% endif %}
+                {% endfor %}
         </div>
-        {% endif %}
-    {% endblock %}
+    </div>
 
+    {% else %}
+        <div class="text-center">
+            <strong>There are no upcoming trips</strong>
+        </div>
+    {%endif%}
     {% if user.is_admin %}
-
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a Trip</button>
-
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content rounded-4 shadow">
-                    <div class="modal-header border-bottom-0">
-                        <h1 class="modal-title fs-5">Add a trip</h1>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                    </div>
-                    <div class="modal-body py-0">
-                        <p>Maybe a form to add a trip</p>
-                    </div>
-                    <div class="modal-footer flex-column border-top-0">
-                        <button type="button" class="btn btn-lg btn-primary w-100 mx-0 mb-2">Save changes</button>
-                        <button type="button" class="btn btn-default w-100" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-              </div>
-            </div>
+    <div class="text-center mt-1">
+    <a href="{% url 'canoe_club:add_trip'%}">
+        <button class="w-25 btn btn-lg btn-light center" type="button" style="color:rgb(51,214,41);border-color:rgb(51,214,41);">Add Trip</button>
+    </a>
+    </div>
     {% endif %}
-
 {% endblock %}
