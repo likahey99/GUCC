@@ -8,12 +8,12 @@
 <h1 class="text-center" style="color: rgb(200,60,200)">Socials</h1>
 
 <div class="d-flex justify-content-center align-items-center container">
-    <div>
+    <div style="width:inherit">
         {% if socials %}
             {% for social in socials %}
                 {% if forloop.first %}<div class="row" style="justify-content: space-between">{% endif %}
                         <div class="col-sm-3 p-2 m-3 text-white rounded" style="background-color: rgba(222,44,216,0.25)">
-                            <a href="" style="text-decoration: none;color: #943bc4"><h2>{{ social.name }}</h2></a>
+                            <a href="{% url 'canoe_club:social' social.slug %}" style="text-decoration: none;color: #943bc4"><h2>{{ social.name }}</h2></a>
                             <h3>Date: {{ social.date }}</h3>
                             <h4>location: {{ social.location }} </h4>
                             <p> {{ social.details }} </p>
@@ -26,11 +26,13 @@
 
 
     {% else %}
-        <strong>There are no upcoming socials</strong>
+        <div class="text-center">
+            <strong>There are no upcoming socials</strong>
+        </div>
     {%endif%}
     {% if user.is_admin %}
     <div class="text-center mt-1">
-    <a href="{% url 'canoe_club:add_social' %}" class="">
+    <a href="{% url 'canoe_club:add_social'%}">
         <button class="w-25 btn btn-lg btn-light center" type="button" style="color:rgb(255,62,224);border-color:rgb(222,44,216);">Add Social</button>
     </a>
     </div>

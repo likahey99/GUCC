@@ -11,7 +11,7 @@
         <body>
             <div class="container text-center w-50 justify-content-md-center h-75 rounded" style="background-color: rgba(0,0,0,0.35); color: white;">
                 <div class="mt-5 align-items-center"></div>
-                <form id="add_social" method="post" action="{% url 'canoe_club:add_social' %}" class="">
+                <form id="add_social" method="post" action="{% url 'canoe_club:add_social' %}">
                     {% csrf_token %}
                     <img class="mb-4 rounded mt-3" src="{% static 'images/canoe_club_logo.jpg' %}" alt="" width="72" height="57">
 
@@ -28,9 +28,10 @@
                         {{ field }}
                         <br>
                     {% endfor %}
-                    <button class="w-25 btn btn-lg btn-outline-light mt-4 mb-2" type="submit" name="submit" value="submit">Submit</button>                    </form>
+                    <button class="w-25 btn btn-lg btn-outline-light mt-4 mb-2" type="submit" name="submit" value="create page">Submit</button>                    </form>
             </div>
         </body>
-    </html>
 {% endblock %}
+</html>
+
 

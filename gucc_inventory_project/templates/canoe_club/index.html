@@ -12,11 +12,15 @@
                 <div>
                     {% if trips %}
                         <h2>Upcoming trips</h2>
-                        <ul>
-                            {% for trip in trips %}
-                                <li>list items for each trip</li>
-                            {% endfor %}
-                        </ul>
+                        <div class="p-2 m-3 text-white rounded" style="background-color: rgba(51,214,41,0.25)">
+                            <ul class="mb-0">
+                                {% for trip in trips %}
+                                    <li class="text-center m-1" style="list-style-type: none;">
+                                        <a href="{% url 'canoe_club:trip' trip.slug %}" style="color: rgb(25,107,20);font-weight: bold">{{ trip.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                         {% else %}
                             <strong>There are no upcoming trips</strong>
                     {% endif %}
@@ -27,11 +31,15 @@
                 <div>
                     {% if socials %}
                         <h2 class="p-1">Upcoming socials</h2>
-                        <ul>
-                            {% for social in socials %}
-                                <li class="text-center" style="list-style-type: none">{{ social.name }}</li>
-                            {% endfor %}
-                        </ul>
+                        <div class="p-2 m-3 text-white rounded" style="background-color: rgba(222,44,216,0.25)">
+                            <ul class="mb-0">
+                                {% for social in socials %}
+                                    <li class="text-center m-1" style="list-style-type: none;">
+                                        <a href="{% url 'canoe_club:social' social.slug %}" style="color: #943bc4;font-weight: bold">{{ social.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                         {% else %}
                             <strong>There are no upcoming Socials</strong>
                     {% endif %}

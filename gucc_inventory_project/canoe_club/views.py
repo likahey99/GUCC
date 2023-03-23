@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -74,6 +74,7 @@ def add_kit(request):
     return render(request, 'canoe_club/add_kit.html', {'form': form})
 
 
+# needs done
 def remove_kit(request):
     form = KitForm()
     print(request.method)
@@ -314,11 +315,12 @@ def social(request, social_name_slug):
     return render(request, "canoe_club/social.html", context_dict)
 
 
-def add_social(request, social_name_slug):
-    try:
-        social = Social.objects.get(slug=social_name_slug)
-    except Social.DoesNotExist:
-        return redirect(reverse("canoe_club:socials"))
+def add_social(request):
+    # try:
+    #     print(1)
+    #     # social = Social.objects.get(slug=social_name_slug)
+    # except Social.DoesNotExist:
+    #     return redirect(reverse("canoe_club:socials"))
     form = SocialForm()
     if request.method == "POST":
         form = SocialForm(request.POST)
@@ -331,8 +333,10 @@ def add_social(request, social_name_slug):
     return render(request, 'canoe_club/add_social.html', context_dict)
 
 
-def remove_social(request):
-    return render(request, "canoe_club/remove_social.html")
+def remove_social(request, social_name_slug):
+    instance = get_object_or_404(Social, slug=social_name_slug)
+    instance.delete()
+    return redirect(reverse("canoe_club:socials"))
 
 
 def trips(request):
@@ -345,14 +349,37 @@ def trips(request):
 
 
 def trip(request, trip_name_slug):
+    context_dict = {}
     try:
         trip = Trip.objects.get(slug=trip_name_slug)
         context_dict["trip"] = trip
+        print(trip.members)
 
     except Trip.DoesNotExist:
         context_dict["trip"] = None
+        print(hi)
 
     return render(request, "canoe_club/trip.html", context_dict)
+
+
+def add_trip(request):
+    form = TripForm()
+    print(request.method)
+    if request.method=="POST":
+        form = TripForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect(reverse("canoe_club:trips"))
+        else:
+            print(form.errors)
+    context_dict = {'form': form}
+    return render(request, 'canoe_club/add_trip.html', context_dict)
+
+
+def remove_trip(request,trip_name_slug):
+    instance = get_object_or_404(Trip, slug=trip_name_slug)
+    instance.delete()
+    return redirect(reverse("canoe_club:trips"))
 
 
 def add_trip_member(request):
@@ -361,20 +388,3 @@ def add_trip_member(request):
 
 def remove_trip_member(request):
     return render(request, "canoe_club/trips/trip/member/remove_member.html")
-
-
-def add_trip(request):
-    form = TripForm()
-    print(request.method)
-    if request.method == "POST":
-        form = TripForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect(reverse("canoe_club:trips"))
-        else:
-            print(form.errors)
-    return render(request, 'canoe_club/add_trip.html', {'form': form})
-
-
-def remove_trip(request):
-    return render(request, "canoe_club/trips/trip/remove_trip.html")

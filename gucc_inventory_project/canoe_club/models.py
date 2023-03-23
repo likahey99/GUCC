@@ -57,7 +57,7 @@ class Kit(models.Model):
 class Social(models.Model):
     NAME_MAX_LENGTH = 255
     DETAILS_MAX_LENGTH = 255
-    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     date = models.DateField()
     details = models.CharField(max_length=DETAILS_MAX_LENGTH)
     location = models.CharField(max_length=128)

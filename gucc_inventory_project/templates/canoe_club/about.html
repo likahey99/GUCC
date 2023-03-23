@@ -5,6 +5,13 @@
     about
 {% endblock %}
 
+<head>
+    <style>
+        @include media-breakpoint-down(md) {.about {display: block;}}
+    </style>
+
+</head>
+
 {% block body_block %}
 <div class="container text-center">
   <h2 class="text-center pt-0 pb-2">About Canoe Club</h2>
@@ -13,7 +20,7 @@
     <img src="{% static 'images/fresher_paddling.jpg' %}" class="img-fluid rounded mt-3" alt="fresher paddling on some white water">
 
     </div>
-    <div class="col rounded mt-3 text-white" style="background-color: rgba(0,0,0,0.35)">
+    <div class="col rounded mt-3 text-white" style="background-color: rgba(0,0,0,0.35);">
       <h4>Trips</h4><br>
         <p>A key part of being a member of GUCC is getting out and about on weekends for paddling and fun. We run a wide range of both day and weekend long trips exploring all corners of Scotland near and far. Our trips happen most weekends and we make sure to paddle a variety of different rivers to cater for all standards of paddlers. Whether you’re the freshest of freshers or a long-time big sender you’ll be able to have fun and push yourself on a GUCC trip.</p>
         <p>The first weekend trip of the year is FRESHERS WEEKEND, this trip is catered towards our newer members and will allow you to get comfortable in a boat in a beginner friendly environment with help and coaching from our friendly older members. There are also plenty of social activities in the evening for everyone to get to know each other and feel included in the GUCC family.</p>
