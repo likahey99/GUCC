@@ -6,14 +6,45 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 import django
 
 django.setup()
-from canoe_club.models import Trip, Kit, Social
+from canoe_club.models import Trip, Kit, Social, User, UserProfile
 
 
 def populate():
-    members = [
-        {
-            # list of members
-        }
+
+    members1 = [
+        {'is_admin': False,
+         'is_member': True,
+         'email': '5658525s@student.gla.ac.uk',
+         'username': 'Ben',
+         'password': 'password'
+         },
+        {'is_admin': False,
+         'is_member': True,
+         'email': '4658742s@student.gla.ac.uk',
+         'username': 'Ayleen',
+         'password': 'password'
+         }
+    ]
+
+    members2 = [
+        {'is_admin': False,
+         'is_member': True,
+         'email': '3658444s@student.gla.ac.uk',
+         'username': 'Tay',
+         'password': 'password'
+         },
+        {'is_admin': False,
+         'is_member': True,
+         'email': '2658999s@student.gla.ac.uk',
+         'username': 'Renee',
+         'password': 'password'
+         },
+        {'is_admin': True,
+         'is_member': True,
+         'email': '1658321s@student.gla.ac.uk',
+         'username': 'Kai',
+         'password': 'password'
+         }
     ]
 
     trips = [
@@ -21,13 +52,13 @@ def populate():
          'location': 'Inverness',
          'date': '2023-03-24',
          'length': 3,
-         'members': '{:}'
+         'members': members1
          },
         {'name': 'Beginner Day Trip',
          'location': 'The Spean',
          'date': '2023-04-01',
          'length': 1,
-         'members': '{:}'
+         'members': members2
          }
     ]
 
@@ -57,6 +88,11 @@ def populate():
     ]
 
     for trip in trips:
+        users = []
+        for member in trip['members']:
+            u = add_user(member['is_admin'], member['is_member'], member['email'], member['username'], member['password'])
+            user = add_user_profile(u)
+
         add_trip(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
         print(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
 
@@ -71,12 +107,23 @@ def populate():
               kit['maintenance_problem'], kit['image'], kit['amount'])
 
 
+def add_user(is_admin, is_member, email, username, password):
+    u = User.objects.get_or_create(is_admin=is_admin, is_member=is_member, email=email, username=username, password=password)[0]
+    u.save()
+    return u
+
+
+def add_user_profile(user):
+    up = UserProfile.objects.get_or_create(user=user)[0]
+    up.save()
+    return up
+
+
 def add_trip(name, location, date, length, members):
-    t = Trip.objects.get_or_create(name=name, location=location)[
+    t = Trip.objects.get_or_create(name=name, location=location, date=date)[
         0]  # because we're calling get or create you don't want information that could create duplicate copies
-    t.date = date
     t.length = length
-    t.members = members
+    t.members.set(members)
     t.save()
     return t
 
