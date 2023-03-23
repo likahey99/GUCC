@@ -300,7 +300,7 @@ def user_logout(request):
 
 def socials(request):
     today = datetime.datetime.today()
-    social_list = Social.objects.order_by("date")
+    social_list = Social.objects.filter(date__gte=today).order_by("date")
     context_dixt = {}
     context_dixt["socials"] = social_list
     return render(request, "canoe_club/socials.html", context_dixt)
@@ -341,7 +341,8 @@ def remove_social(request):
 
 def trips(request):
     today = datetime.datetime.today()
-    trip_list = Trip.objects.order_by("-date")
+    trip_list = Trip.objects.filter(date__gte=today).order_by("date")
+
     context_dixt = {}
     context_dixt["trips"] = trip_list
     return render(request, "canoe_club/trips.html", context_dixt)

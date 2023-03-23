@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.urls import reverse
 from django.template.defaultfilters import slugify
 
 
