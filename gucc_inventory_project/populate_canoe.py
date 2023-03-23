@@ -82,9 +82,27 @@ def populate():
          'brand': 'Palm',
          'owner': 'Club',
          'type': 'paddle',
-         'maintenance problem': 'N/A',
-         'amount': 4,
-         'image': 'image'}
+         "maitenence": False,
+         'maintenance problem': None,
+         'amount': 4,},
+        {'name': 'wetsuit',
+         'size': 0,
+         'colour': 'green',
+         'brand': 'O\'Neill',
+         'owner': 'Club',
+         'type': 'wetsuit',
+         "maitenence": True,
+         'maintenance problem': 'tear in wetsuit',
+         'amount': 2,},
+        {'name': 'canoe',
+         'size': 0,
+         'colour': 'blue',
+         'brand': 'Pelican',
+         'owner': 'Club',
+         'type': 'boat',
+         "maitenence": True,
+         'maintenance problem': None,
+         'amount': 2, }
     ]
 
     for trip in trips:

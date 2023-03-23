@@ -47,7 +47,6 @@ class Kit(models.Model):
     maintenance_problem = models.CharField(null=True, blank=True, max_length=20)
     maintenance = models.BooleanField(default=True)
     amount = models.IntegerField(default=0)
-    image = models.ImageField(upload_to='kit_images', blank=True)
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):

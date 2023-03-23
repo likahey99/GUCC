@@ -135,10 +135,6 @@ def move_kit(request, kit_name_slug):
     return render(request, "canoe_club/move_kit.html")
 
 
-def user_login(request):
-    return render(request, 'canoe_club/login.html')
-
-
 def user_profile(request, username):
     try:
         selected_user = User.objects.get(username=username)
