@@ -26,15 +26,13 @@ class ViewsTestCase(TestCase):
         today = datetime.today()
         expected_trips = Trip.objects.filter(date__gte=today).order_by('date')[:5]
         expected_socials = Social.objects.filter(date__gte=today).order_by('date')[:5]
-        print(expected_trips)
     
         
         trips = response.context['trips']
-        print(trips)
-        self.assertQuerysetEqual(trips, expected_trips, ordered=False)
+        self.assertQuerysetEqual(trips, expected_trips, ordered=True, transform=lambda x: x)
 
         socials = response.context['socials']
-        self.assertQuerysetEqual(socials, expected_socials, ordered=False)
+        self.assertQuerysetEqual(socials, expected_socials, ordered=True, transform=lambda x: x)
 
 
 #this also tests views as successful rendering implies views is working fine.
