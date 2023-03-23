@@ -10,7 +10,6 @@ from canoe_club.models import Trip, Kit, Social, User, UserProfile
 
 
 def populate():
-
     members1 = [
         {'is_admin': False,
          'is_member': True,
@@ -47,6 +46,14 @@ def populate():
          }
     ]
 
+    kitOwner = {
+        'is_admin': False,
+        'is_member': True,
+        'email': '9658999s@student.gla.ac.uk',
+        'username': 'Allan',
+        'password': 'password'
+    }
+
     trips = [
         {'name': 'Intermediate Weekend',
          'location': 'Inverness',
@@ -80,10 +87,10 @@ def populate():
          'size': 0,
          'colour': 'red',
          'brand': 'Palm',
-         'owner': 'Club',
+         'owner': kitOwner,
          'type': 'paddle',
-         "maitenence": False,
-         'maintenance problem': None,
+         "maintenance": False,
+         'maintenance_problem': "N/A",
          'amount': 4,},
         {'name': 'wetsuit',
          'size': 0,
@@ -91,8 +98,8 @@ def populate():
          'brand': 'O\'Neill',
          'owner': 'Club',
          'type': 'wetsuit',
-         "maitenence": True,
-         'maintenance problem': 'tear in wetsuit',
+         "maintenance": True,
+         'maintenance_problem': 'tear in wetsuit',
          'amount': 2,},
         {'name': 'canoe',
          'size': 0,
@@ -100,33 +107,38 @@ def populate():
          'brand': 'Pelican',
          'owner': 'Club',
          'type': 'boat',
-         "maitenence": True,
-         'maintenance problem': None,
+         "maintenance": True,
+         'maintenance_problem': "N/A",
          'amount': 2, }
     ]
 
     for trip in trips:
         users = []
         for member in trip['members']:
-            u = add_user(member['is_admin'], member['is_member'], member['email'], member['username'], member['password'])
-            user = add_user_profile(u)
+            u = add_user(member['is_admin'], member['is_member'], member['email'], member['username'],
+                         member['password'])
+            users.append(add_user_profile(u))
 
-        add_trip(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
-        print(trip['name'], trip['location'], trip['date'], trip['length'], trip['members'])
+        add_trip(trip['name'], trip['location'], trip['date'], trip['length'], users)
+        print(trip['name'], trip['location'], trip['date'], trip['length'])
 
     for social in socials:
         add_social(social['name'], social['date'], social['details'], social['location'])
         print(social['name'], social['date'], social['details'], social['location'])
 
     for kit in kits:
-        add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['owner'], kit['type'],
-                kit['maintenance_problem'], kit['image'], kit['amount'])
-        print(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['owner'], kit['type'],
-              kit['maintenance_problem'], kit['image'], kit['amount'])
+        user = add_user(kit['owner']['is_admin'], kit['owner']['is_member'], kit['owner']['email']
+                        , kit['owner']['username'], kit['owner']['password'])
+
+        add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], user, kit['type'],
+                kit['maintenance_problem'], kit["maintenance"], kit['image'], kit['amount'])
+        print(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['type'],
+              kit['maintenance_problem'],kit["maintenance"], kit['image'], kit['amount'])
 
 
 def add_user(is_admin, is_member, email, username, password):
-    u = User.objects.get_or_create(is_admin=is_admin, is_member=is_member, email=email, username=username, password=password)[0]
+    u = User.objects.get_or_create(is_admin=is_admin, is_member=is_member, email=email, username=username,
+                                   password=password)[0]
     u.save()
     return u
 
@@ -147,16 +159,13 @@ def add_trip(name, location, date, length, members):
 
 
 def add_social(name, date, details, location):
-    s = Social.objects.get_or_create(name=name)[0]
-    s.date = date
-    s.details = details
-    s.location = location
+    s = Social.objects.get_or_create(name=name, date=date, details=details, location=location)[0]
     s.save()
     return s
 
 
-def add_kit(name, size, colour, brand, owner, type, maintenance_problem, image, amount=0):
-    k = Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, type=type)[0]
+def add_kit(name, size, colour, brand, owner, type, maintenance_problem, maintenance, image, amount=0):
+    k = Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, maintenance=maintenance, type=type)[0]
     if maintenance_problem is not None:
         k.maintenance_problem = maintenance_problem
     k.amount = amount + 1
