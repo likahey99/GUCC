@@ -8,32 +8,33 @@ from canoe_club.views import index
 # Create your tests here.
 
 
-# class ViewsTestCase(TestCase):
-#     def setUp(self):
-#         self.today = datetime.today()
+class ViewsTestCase(TestCase):
+    def setUp(self):
+        self.today = datetime.today()
 
-#         #creating some trips and socials for testing
+        #creating some trips and socials for testing
 
-#         self.trip = Trip.objects.create(name = 'Trips', location='xyz', date=self.today + timedelta(days=1))
-#         self.trip2 = Trip.objects.create(name = 'Trip2', location='xyz', date=self.today + timedelta(days=2))
-#         self.social = Social.objects.create(name='Social', details='Info about social', date=self.today + timedelta(days=1))
-#         self.social2 = Social.objects.create(name='Social2', details='Info about social2', date=self.today + timedelta(days=2))
+        self.trip = Trip.objects.create(name = 'Trips', location='xyz', date=self.today + timedelta(days=1))
+        self.trip2 = Trip.objects.create(name = 'Trip2', location='xyz', date=self.today + timedelta(days=2))
+        self.social = Social.objects.create(name='Social', details='Info about social', date=self.today + timedelta(days=1))
+        self.social2 = Social.objects.create(name='Social2', details='Info about social2', date=self.today + timedelta(days=2))
         
-#     #checks if trips and socials are in the context dictionary and if they are sorted by date
-#     def test_index_view(self):
-#         url = reverse('index')
-#         response = self.client.get(url)
-
-#         expected_trips = Trip.objects.filter(date__gte=date).order_by('date')[:5]
-#         expected_socials = Social.objects.filter(date__gte=date).order_by('date')[:5]
+    #checks if trips and socials are in the context dictionary and if they are sorted by date
+    def test_index_view(self):
+        url = reverse('index')
+        response = self.client.get(url)
+        today = datetime.today()
+        expected_trips = Trip.objects.filter(date__gte=today).order_by('date')[:5]
+        expected_socials = Social.objects.filter(date__gte=today).order_by('date')[:5]
+        print(expected_trips)
+    
         
-#         trips = response.context['trips']
-#         self.assertQuerysetEqual(trips, expected_trips, ordered=True)
+        trips = response.context['trips']
+        print(trips)
+        self.assertQuerysetEqual(trips, expected_trips, ordered=False)
 
-#         socials = response.context['socials']
-#         self.assertQuerysetEqual(socials, expected_socials, ordered=True)
-
-
+        socials = response.context['socials']
+        self.assertQuerysetEqual(socials, expected_socials, ordered=False)
 
 
 #this also tests views as successful rendering implies views is working fine.
