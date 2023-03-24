@@ -376,24 +376,28 @@ def trip(request, trip_name_slug):
 
     return render(request, "canoe_club/trip.html", context_dict)
 
-
+@login_required
 def add_trip(request):
-    form = TripForm()
-    print(request.method)
-    if request.method=="POST":
-        form = TripForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect(reverse("canoe_club:trips"))
-        else:
-            print(form.errors)
-    context_dict = {'form': form}
-    return render(request, 'canoe_club/add_trip.html', context_dict)
+    if request.user.is_admin:
+        form = TripForm()
+        print(request.method)
+        if request.method=="POST":
+            form = TripForm(request.POST)
+            if form.is_valid():
+                form.save(commit=True)
+                return redirect(reverse("canoe_club:trips"))
+            else:
+                print(form.errors)
+        context_dict = {'form': form}
+        return render(request, 'canoe_club/add_trip.html', context_dict)
+    else:
+        return reverse(redirect("canoe_club:index"))
 
-
+@login_required
 def remove_trip(request,trip_name_slug):
-    instance = get_object_or_404(Trip, slug=trip_name_slug)
-    instance.delete()
+    if request.user.is_admin:
+        instance = get_object_or_404(Trip, slug=trip_name_slug)
+        instance.delete()
     return redirect(reverse("canoe_club:trips"))
 
 
