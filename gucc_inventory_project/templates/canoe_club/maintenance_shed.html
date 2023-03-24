@@ -6,15 +6,11 @@
 {% endblock %}
 
 {% block body_block %}
-    <h3 class="text-center text-light col-md-4 ml-4">Maintenance Shed</h3>
-    {#{% if kit %} <!--if there is stuff in the database-->#}
-
-    <div class="container p-3" style="flex-direction: column;">
+    <h1 class="text-center text-danger">Maintenance Shed</h1>
+{#    {% if Kit %} <!--if there is stuff in the database-->#}
+    <div class="container p-3 justify-content-center" style="flex-direction: column;">
         {% for kit in kit_list %}
-            <div class="row m-3">
-                <div class="col-sm-3">
-                    <img class="img-fluid rounded" src="{% static 'images/club_kit_photo.jpg' %}" alt="image">
-                </div>
+            <div class="row m-3 justify-content-center">
                 <div class="col-sm-4 text-white" style="background-color: rgba(0,0,0,0.25);">
                     <h4>{{ kit.name }}</h4>
                     <p>{{ kit.maintenance_problem }}</p>
