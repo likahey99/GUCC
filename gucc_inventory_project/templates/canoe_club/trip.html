@@ -15,7 +15,7 @@
     <h4>Members:</h4>
     <ul style="list-style-type: none;color:white">
     {% for member in trip.members.all %}
-        <li><a href="{% url 'canoe_club:index' %}" class="text-white">{{ member }}</a></li>
+        <li><a href="{% url 'canoe_club:profile' member.username %}" class="text-white">{{ member }}</a></li>
     {% endfor %}
     </ul>
 
