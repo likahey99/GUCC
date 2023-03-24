@@ -35,7 +35,8 @@ def about(request):
 @login_required
 def main_shed(request):
     context_dict = {}
-    context_dict['kit_list'] = Kit.objects.filter(maintenance=True).order_by('-type')
+    context_dict['kit_list'] = Kit.objects.filter(maintenance=False).order_by('-type')
+    print(context_dict)
 
     if request.method == 'POST':
         change = request.POST['change'].split(',')
@@ -51,10 +52,10 @@ def main_shed(request):
             print(kit_clicked.amount)
         elif change[1] == 'move':
             print('mooove')
-            # move_kit(request)
+            move_kit_to_maintenance(request,change[0])
         elif change[1] == 'remove':
             print('remo#ove')
-            # remove_kit(request)
+            remove_kit(request, change[0])
 
     return render(request, 'canoe_club/main_shed.html', context_dict)
 
@@ -65,7 +66,6 @@ def add_kit(request):
         print(request.method)
         if request.method == "POST":
             form = KitForm(request.POST)
-
             if form.is_valid():
                 form.save(commit=True)
                 kit = Kit.objects.get(name=form.cleaned_data['name'])
@@ -118,12 +118,13 @@ def maintenance_shed(request):
             kit_clicked.amount += 1
             kit_clicked.save()
             print(kit_clicked.amount)
+            move_kit_to_maintenance(request)
         elif change[1] == 'move':
-            print('mooove')
-            # move_kit(request)
+            print('mooove_to_main')
+            move_kit_to_main(request,change[0])
         elif change[1] == 'remove':
             print('remo#ove')
-            # remove_kit(request)
+            remove_kit(request,change[0])
 
     return render(request, 'canoe_club/maintenance_shed.html', context_dict)
 
@@ -139,9 +140,19 @@ def kit(request, kit_name_slug):
 
     return render(request, "canoe_club/kit.html", context_dict)
 
+
 @login_required
-def move_kit(request, kit_name_slug):
-    return render(request, "canoe_club/move_kit.html")
+def move_kit_to_maintenance(request, kit_name_slug):
+    instance = get_object_or_404(Kit, slug=kit_name_slug)
+    instance.maintenance = True
+    instance.save()
+    return render(request, "canoe_club/main_shed.html")
+@login_required
+def move_kit_to_main(request, kit_name_slug):
+    instance = get_object_or_404(Kit, slug=kit_name_slug)
+    instance.maintenance = False
+    instance.save()
+    return render(request, "canoe_club/maintenance_shed.html")
 
 
 def user_profile(request, username):
@@ -325,11 +336,6 @@ def social(request, social_name_slug):
 @login_required
 def add_social(request):
     if request.user.is_admin:
-        # try:
-        #     print(1)
-        #     # social = Social.objects.get(slug=social_name_slug)
-        # except Social.DoesNotExist:
-        #     return redirect(reverse("canoe_club:socials"))
         form = SocialForm()
         if request.method == "POST":
             form = SocialForm(request.POST)
@@ -342,7 +348,6 @@ def add_social(request):
         return render(request, 'canoe_club/add_social.html', context_dict)
     else:
         return(redirect(reverse("canoe_club:index")))
-
 
 def remove_social(request, social_name_slug):
     instance = get_object_or_404(Social, slug=social_name_slug)
@@ -368,7 +373,6 @@ def trip(request, trip_name_slug):
 
     except Trip.DoesNotExist:
         context_dict["trip"] = None
-        print(hi)
 
     return render(request, "canoe_club/trip.html", context_dict)
 

@@ -6,54 +6,64 @@ View Kit
 
 {% block body_block %}
 {% if kit %}
-<div>
-    <!-- add picture static url -->
-</div>
-<div class = container>
-    <div>
-        <h1> {{ kit.name }}</h1>>
-    </div>
-</div>
 
-<div class = "flex-container">
-    <div>
-        <h4>Size: {{ kit.size }} </h4>>
-        <h4>Brand: {{ kit.brand }}} </h4>
-        <h4>Type: {{ kit.type }} </h4>
-    </div>
-    <div>
-        <h4>Colour: {{ kit.colour }}</h4>
-        {% if kit.owner %}
-        <h4>Owner: {{ kit.owner }} </h4>
+    <div class="h-100 d-block align-items-center justify-content-center flex-wrap">
+        {% if kit.maintenance %}
+            <h1 class="text-danger"> {{ kit.name }}</h1>
+            <div class="container justify-content-md-center rounded text-white" style="background-color: rgba(240,220,35,0.25)">
+        {% else %}
+            <h1 style="color: #ffcc33" class="text-center"> {{ kit.name }}</h1>
+            <div class="container justify-content-md-center rounded text-white" style="background-color: rgba(240,220,35,0.25)">
         {% endif %}
-        {% if kit.maintenance_problem  %}
-        <h4> {{ kit.maintenance_problem }} </h4>>
-        {% endif %}
-        
+                <div class="flex-container pb-3 mt-4">
+                    <h3 class="text-center text-dark">Details</h3>
+                    <h4 class="text-center">Owner: {{ kit.owner }} </h4>
+                    <div class="row ml-5">
+                        <div class="col">
+                            <h4>Type: {{ kit.type }} </h4>
+                        </div>
+                        <div class="col text-right mr-5">
+                            <h4>Brand: {{ kit.brand }}</h4>
+                        </div>
+                    </div>
+                    <div class="row ml-5">
+                        <div class="col">
+                            <h4>Size: {{ kit.size }} </h4>
+                        </div>
+                        <div class="col text-right mr-5">
+                            <h4>Colour: {{ kit.colour }}</h4>
+                        </div>
+                    </div>
+                    {% if kit.maintenance %}
+                        <h3>Maintenance problem</h3>
+                        <h4> {{ kit.maintenance_problem }} </h4>
+                    {% endif %}
+
+            </div>
+
+            <div>
+                <!-- move shed button -->
+            </div>
+
+            <div>
+                <!-- remove item button -->
+            </div>
+
+            <div>
+                <!-- check out button --->
+            </div>
+
+            <div>
+                <!-- plus minus button -->
+            </div>
+
+
+            {% else %}
+            <div>
+                <strong>This piece of kit does not exit</strong>
+            </div>
+            {% endif %}
+        </div>
     </div>
-</div>
-
-<div>
-    <!-- move shed button -->
-</div>
-
-<div>
-    <!-- remove item button -->
-</div>
-
-<div>
-    <!-- check out button --->
-</div>
-
-<div>
-    <!-- plus minus button -->
-</div>
-
-
-{% else %}
-<div>
-    <strong>This piece of kit does not exit</strong>
-</div>
-{% endif %}
 
 {% endblock %}

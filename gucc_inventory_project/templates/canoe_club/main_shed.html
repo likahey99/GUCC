@@ -2,61 +2,72 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    main shed
+    Main shed
 {% endblock %}
 
 {% block body_block %}
-    <h3 class="text-center text-light col-md-4 ml-4">Main Shed</h3>
-    {#{% if kit %} <!--if there is stuff in the database-->#}
-
-    <div class="container p-3" style="flex-direction: column;">
+    <h1 class="text-center" style="color: #ffcc33">Main Shed</h1>
+    {% if user.is_admin %}
+    <div class="text-center mt-1 row justify-content-center">
+        <div class="col">
+            <a href="{% url 'canoe_club:add_kit'%}">
+                <button class="w-25 btn btn-lg btn-outline-light center" type="button" style="">Add Kit</button>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    <div class="container p-3 justify-content-center" style="flex-direction: column;">
+    {% if kit_list %}
         {% for kit in kit_list %}
-            <div class="row">
-                <div class="col-sm-3">
-                    <img class="img-fluid rounded" src="{% static 'images/club_kit_photo.jpg' %}" alt="image">
-                </div>
-                <div class="col-sm-4 bg-info">
-                    <h4>{{ kit.name }}</h4>
-                    <p>{{ kit.maintenance_problem }}</p>
-                </div>
-                <div class="col-sm-2 bg-primary min-h-100 m-0 p-0">
-                    <form action="." method="POST" class="input-group h-100">
-                        {% csrf_token %}
-                        <input type="hidden" name="change" id="change" value="{{ kit.slug }},">
-                        <div class="input-group-btn">
-                            <button onclick="minus(this)" class="btn btn-danger btn-number h-100" style="width: 36px">
-                                -
-                            </button>
-                        </div>
-                        <div onchange="check(this)" id="quantity" name="quantity" class="h-100 form-control input-number col-xs-1" value=0 min=1 max=100>{{ kit.amount }}</div>
-                        <div class="input-group-btn">
-                            <button onclick="plus(this)" class="btn btn-success btn-number h-100 w-100" style="width: 36px">
-                                +
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-sm-2 bg-info">
-                    <div class="row flex-column">
-                        <div class="col p-0 bg-warning">
-                            <form action="." method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="change" value="{{ kit.slug }},move">
-                                <button type="submit" class="btn btn-outline-dark w-100" data-type="" data-field="">Move Shed</button>
-                            </form>
-                        </div>
-                        <div class="col p-0 bg-danger">
-                            <form action="." method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="change" value="{{ kit.slug }},remove">
-                                <button type="submit" class="btn btn-outline-dark w-100">Remove Item</button>
-                            </form>
+                <div class="row m-3 justify-content-center">
+                    <div class="col-sm-4 text-white" style="background-color: rgba(0,0,0,0.25);">
+                        <a href="{% url 'canoe_club:main_shed_kit' kit.slug %}" class="text-warning">
+                            <h4>{{ kit.name }}</h4>
+                            <h5 class="text-white">Owner: {{ kit.owner }}</h5>
+                        </a>
+                    </div>
+                    <div class="col-sm-2 bg-primary min-h-100 m-0 p-0">
+                        <form action="." method="POST" class="input-group h-100">
+                            {% csrf_token %}
+                            <input type="hidden" name="change" id="change" value="{{ kit.slug }},">
+                            <div class="input-group-btn">
+                                <button onclick="minus(this)" class="btn btn-danger btn-number h-100" style="width: 36px">
+                                    -
+                                </button>
+                            </div>
+                            <div onchange="check(this)" id="quantity" name="quantity" class="h-100 form-control input-number col-xs-1" value=0 min=1 max=100>{{ kit.amount }}</div>
+                            <div class="input-group-btn">
+                                <button onclick="plus(this)" class="btn btn-success btn-number h-100 w-100" style="width: 36px">
+                                    +
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-2 bg-info">
+                        <div class="row flex-column">
+                            <div class="col p-0 bg-warning">
+                                <form action="." method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="change" value="{{ kit.slug }},move">
+                                    <button type="submit" class="btn btn-outline-dark w-100" data-type="" data-field="">Move Shed</button>
+                                </form>
+                            </div>
+                            <div class="col p-0 bg-danger">
+                                <form action="." method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="change" value="{{ kit.slug }},remove">
+                                    <button type="submit" class="btn btn-outline-dark w-100">Remove Item</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         {% endfor %}
     </div>
+    {% else %}
+        <Strong>No Kit</Strong>
+    {% endif %}
+
 
     <script>
         function check(not_this){
@@ -65,16 +76,15 @@
         function minus(not_this){
             const form = not_this.parentElement.parentElement;
             const counter = form.children.namedItem('change');
-            counter.value = '-1';
+            counter.value += '-1';
             form.submit();
         }
         function plus(not_this){
             const form = not_this.parentElement.parentElement;
             const counter = form.children.namedItem('change');
-            counter.value = '1';
+            counter.value += '1';
             form.submit();
         }
     </script>
 
-{#{% endif %}#}
 {% endblock %}

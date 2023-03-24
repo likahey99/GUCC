@@ -14,8 +14,9 @@
                     {% if forloop.first %}<div class="row" style="justify-content: space-between">{% endif %}
                             <div class="col-sm-3 p-2 m-3 text-white rounded" style="background-color: rgba(51,214,41,0.25)">
                                 <a href="{% url 'canoe_club:trip' trip.slug %}" style="text-decoration: none;color: #006600"><h2>{{ trip.name }}</h2></a>
-                                <h3>Date: {{ trip.date }}</h3>
-                                <h4>location: {{ trip.location }} </h4>
+                                <h4>Date: {{ trip.date }}</h4>
+                                <h5>location: {{ trip.location }} </h5>
+                                <h5>Days: {{ trip.length }}</h5>
                             </div>
                     {% if forloop.counter|divisibleby:3 %}</div><div class="row" style="justify-content: space-between">{% endif %}
                     {% if forloop.last %}</div>{% endif %}
