@@ -131,9 +131,9 @@ def populate():
                         , kit['owner']['username'], kit['owner']['password'])
 
         add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], user, kit['type'],
-                kit['maintenance_problem'], kit["maintenance"], kit['image'], kit['amount'])
+                kit['maintenance_problem'], kit["maintenance"], kit['amount'])
         print(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['type'],
-              kit['maintenance_problem'],kit["maintenance"], kit['image'], kit['amount'])
+              kit['maintenance_problem'],kit["maintenance"], kit['amount'])
 
 
 def add_user(is_admin, is_member, email, username, password):
@@ -164,12 +164,11 @@ def add_social(name, date, details, location):
     return s
 
 
-def add_kit(name, size, colour, brand, owner, type, maintenance_problem, maintenance, image, amount=0):
+def add_kit(name, size, colour, brand, owner, type, maintenance_problem, maintenance, amount=0):
     k = Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, maintenance=maintenance, type=type)[0]
     if maintenance_problem is not None:
         k.maintenance_problem = maintenance_problem
     k.amount = amount + 1
-    k.image = image
     k.save()
     return k
 
