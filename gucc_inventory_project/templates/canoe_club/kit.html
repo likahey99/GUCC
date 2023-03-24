@@ -9,61 +9,113 @@ View Kit
 
     <div class="h-100 d-block align-items-center justify-content-center flex-wrap">
         {% if kit.maintenance %}
-            <h1 class="text-danger"> {{ kit.name }}</h1>
-            <div class="container justify-content-md-center rounded text-white" style="background-color: rgba(240,220,35,0.25)">
+            <h1 class="text-danger text-center"> {{ kit.name }}</h1>
+            <div class="container justify-content-md-center rounded text-white" style="background-color: rgba(217,83,79,0.25)">
         {% else %}
             <h1 style="color: #ffcc33" class="text-center"> {{ kit.name }}</h1>
             <div class="container justify-content-md-center rounded text-white" style="background-color: rgba(240,220,35,0.25)">
         {% endif %}
-                <div class="flex-container pb-3 mt-4">
-                    <h3 class="text-center text-dark">Details</h3>
-                    <h4 class="text-center">Owner: {{ kit.owner }} </h4>
-                    <div class="row ml-5">
-                        <div class="col">
-                            <h4>Type: {{ kit.type }} </h4>
-                        </div>
-                        <div class="col text-right mr-5">
-                            <h4>Brand: {{ kit.brand }}</h4>
-                        </div>
+            <div class="flex-container pb-3 mt-4">
+                <h3 class="text-center text-dark">Details</h3>
+                <h4 class="text-center">Owner: {{ kit.owner }} </h4>
+                <div class="row ml-5">
+                    <div class="col">
+                        <h4>Type: {{ kit.type }} </h4>
                     </div>
-                    <div class="row ml-5">
-                        <div class="col">
-                            <h4>Size: {{ kit.size }} </h4>
-                        </div>
-                        <div class="col text-right mr-5">
-                            <h4>Colour: {{ kit.colour }}</h4>
-                        </div>
+                    <div class="col text-right mr-5">
+                        <h4>Brand: {{ kit.brand }}</h4>
                     </div>
-                    {% if kit.maintenance %}
-                        <h3>Maintenance problem</h3>
-                        <h4> {{ kit.maintenance_problem }} </h4>
-                    {% endif %}
-
-            </div>
-
-            <div>
-                <!-- move shed button -->
-            </div>
-
-            <div>
-                <!-- remove item button -->
-            </div>
-
-            <div>
-                <!-- check out button --->
-            </div>
-
-            <div>
-                <!-- plus minus button -->
-            </div>
-
-
-            {% else %}
-            <div>
-                <strong>This piece of kit does not exit</strong>
-            </div>
-            {% endif %}
+                </div>
+                <div class="row ml-5">
+                    <div class="col">
+                        <h4>Size: {{ kit.size }} </h4>
+                    </div>
+                    <div class="col text-right mr-5">
+                        <h4>Colour: {{ kit.colour }}</h4>
+                    </div>
+                </div>
+                {% if kit.maintenance %}
+                    <h3 class="text-center text-danger">Maintenance problem</h3>
+                    <h4> {{ kit.maintenance_problem }} </h4>
+                {% endif %}
         </div>
     </div>
+    {% if user.is_admin %}
+    {% if kit.maintenance %}
+        <div class="text-center mt-1">
+            <button class="w-25 btn btn-lg btn-light center" type="button" data-toggle="modal" data-target="#myModal">Add Problem</button>
+        </div>
+        <div id="myModal" class="modal fade text-dark" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content rounded-4 shadow">
+                    <div class="modal-header border-bottom-0">
+                        <h2 class="modal-title fs-3">Add Maintenance Problem</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                    </div>
+                    <div class="modal-body py-0">
+                        <form id="add_problem" method="post" action="{% url 'canoe_club:main_shed' %}">
+                            {% csrf_token %}
+                            {% for field in form.visible_fields %}
+                                <div class="p-2"></div>
+                                <label class="">{{field.name}}</label>
+                                {{ field.errors }}
+                                {{ field.help_text }}
+                                {{ field }}
+                                <br>
+                            {% endfor %}
+                        </form>
+                    </div>
+                    <div class="modal-footer flex-column border-top-0">
+                        <div class="w-100 justify-content-center align-items-center">
+                        <a href="{% url 'canoe_club:index'%}">
+                            <button class="w-25 btn btn-lg btn-outline-dark justify-content-center" type="button">Submit</button>
+                        </a>
+                        </div>
+                        <div class="text-center mt-1">
+                            <button type="button" class="btn btn-default w-100 center" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    {% endif %}
+    {% endif %}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col">#}
+{#                <form action="." method="POST">#}
+{#                    {% csrf_token %}#}
+{#                    <input type="hidden" name="change" value="{{ kit.slug }},move">#}
+{#                    <button type="submit" class="btn btn-outline-light w-100" data-type="" data-field="">Move Shed</button>#}
+{#                </form>#}
+{#            </div>#}
+{#            <div class="col">#}
+{#                <form action="." method="POST">#}
+{#                    {% csrf_token %}#}
+{#                    <input type="hidden" name="problem" value="{{ kit.slug }},problem">#}
+{#                    <button type="submit" class="btn btn-outline-light w-100">Add Problem</button>#}
+{#                </form>#}
+{#            </div>#}
+{#            <div class="col">#}
+{#                <form action="." method="POST">#}
+{#                    {% csrf_token %}#}
+{#                    <input type="hidden" name="change" value="{{ kit.slug }},remove">#}
+{#                    <button type="submit" class="btn btn-outline-light w-100">Remove Item</button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
+    <script>
+        function problem(not_this){
+
+        }
+    </script>
+
+{% else %}
+    <div>
+        <strong>This piece of kit does not exit</strong>
+    </div>
+{% endif %}
 {% endblock %}

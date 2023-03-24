@@ -79,22 +79,11 @@ def add_kit(request):
 
 # needs done
 @login_required
-def remove_kit(request):
-    if request.user.is_admin:
-        form = KitForm()
-        print(request.method)
-        if request.method == "POST":
-            form = KitForm(request.POST)
+def remove_kit(request,kit_name_slug):
+    instance = get_object_or_404(Kit, slug=kit_name_slug)
+    instance.delete()
+    return redirect(reverse("canoe_club:main_shed"))
 
-            if form.is_valid():
-                form.save(commit=True)
-                kit = Kit.objects.get(name=form.cleaned_data['name'])
-                return redirect(reverse("canoe_club:main_shed_kit", kwargs={"kit_name_slug": kit.slug}))
-            else:
-                print(form.errors)
-        return render(request, 'canoe_club/remove_kit.html', {'form': form})
-    else:
-        return redirect(reverse("Canoe_club:index"))
 @login_required
 def move_shed(request):
     if request.user.is_admin:
@@ -118,7 +107,7 @@ def maintenance_shed(request):
             kit_clicked.amount += 1
             kit_clicked.save()
             print(kit_clicked.amount)
-            move_kit_to_maintenance(request)
+            move_kit_to_maintenance(request,change[0])
         elif change[1] == 'move':
             print('mooove_to_main')
             move_kit_to_main(request,change[0])
@@ -147,6 +136,8 @@ def move_kit_to_maintenance(request, kit_name_slug):
     instance.maintenance = True
     instance.save()
     return render(request, "canoe_club/main_shed.html")
+
+
 @login_required
 def move_kit_to_main(request, kit_name_slug):
     instance = get_object_or_404(Kit, slug=kit_name_slug)
