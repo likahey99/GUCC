@@ -41,7 +41,7 @@ class Kit(models.Model):
     size = models.IntegerField()
     colour = models.CharField(max_length=20)
     brand = models.CharField(max_length=20)
-    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)  # link to member id
+    owner = models.ForeignKey(UserProfile, null=True, blank=True, on_delete=models.CASCADE)  # link to member id
     type = models.CharField(max_length=20)
     maintenance_problem = models.CharField(null=True, blank=True, max_length=20)
     maintenance = models.BooleanField(default=False)

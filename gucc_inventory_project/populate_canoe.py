@@ -46,11 +46,27 @@ def populate():
          }
     ]
 
-    kitOwner = {
+    kitOwner1 = {
         'is_admin': False,
         'is_member': True,
         'email': '9658999s@student.gla.ac.uk',
         'username': 'Allan',
+        'password': 'password'
+    }
+
+    kitOwner2 = {
+        'is_admin': False,
+        'is_member': True,
+        'email': '1058999s@student.gla.ac.uk',
+        'username': 'Amy',
+        'password': 'password'
+    }
+
+    kitOwner3 = {
+        'is_admin': False,
+        'is_member': True,
+        'email': '1158999s@student.gla.ac.uk',
+        'username': 'Liz',
         'password': 'password'
     }
 
@@ -87,7 +103,7 @@ def populate():
          'size': 0,
          'colour': 'red',
          'brand': 'Palm',
-         'owner': kitOwner,
+         'owner': kitOwner1,
          'type': 'paddle',
          "maintenance": False,
          'maintenance_problem': "N/A",
@@ -96,7 +112,7 @@ def populate():
          'size': 0,
          'colour': 'green',
          'brand': 'O\'Neill',
-         'owner': 'Club',
+         'owner': kitOwner2,
          'type': 'wetsuit',
          "maintenance": True,
          'maintenance_problem': 'tear in wetsuit',
@@ -105,7 +121,7 @@ def populate():
          'size': 0,
          'colour': 'blue',
          'brand': 'Pelican',
-         'owner': 'Club',
+         'owner': kitOwner3,
          'type': 'boat',
          "maintenance": True,
          'maintenance_problem': "N/A",
@@ -127,13 +143,14 @@ def populate():
         print(social['name'], social['date'], social['details'], social['location'])
 
     for kit in kits:
-        user = add_user(kit['owner']['is_admin'], kit['owner']['is_member'], kit['owner']['email']
+        u = add_user(kit['owner']['is_admin'], kit['owner']['is_member'], kit['owner']['email']
                         , kit['owner']['username'], kit['owner']['password'])
+        user = add_user_profile(u)
 
         add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], user, kit['type'],
-                kit['maintenance_problem'], kit["maintenance"], kit['image'], kit['amount'])
+                kit['maintenance_problem'], kit["maintenance"], kit['amount'])
         print(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['type'],
-              kit['maintenance_problem'],kit["maintenance"], kit['image'], kit['amount'])
+              kit['maintenance_problem'],kit["maintenance"], kit['amount'])
 
 
 def add_user(is_admin, is_member, email, username, password):
@@ -164,12 +181,11 @@ def add_social(name, date, details, location):
     return s
 
 
-def add_kit(name, size, colour, brand, owner, type, maintenance_problem, maintenance, image, amount=0):
+def add_kit(name, size, colour, brand, owner, type, maintenance_problem, maintenance, amount=0):
     k = Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, maintenance=maintenance, type=type)[0]
     if maintenance_problem is not None:
         k.maintenance_problem = maintenance_problem
     k.amount = amount + 1
-    k.image = image
     k.save()
     return k
 
