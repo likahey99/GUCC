@@ -11,6 +11,7 @@
     <div class="mt-3">
     <h3>Date: {{ trip.date }}</h3>
     <h4>location: {{ trip.location }} </h4>
+    <h4>Days: {{ trip.length }}</h4>
     <h4>Members:</h4>
     <ul style="list-style-type: none;color:white">
     {% for member in trip.members.all %}

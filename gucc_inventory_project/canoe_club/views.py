@@ -69,7 +69,7 @@ def add_kit(request):
         if form.is_valid():
             form.save(commit=True)
             kit = Kit.objects.get(name=form.cleaned_data['name'])
-            return redirect(reverse("canoe_club:main_shed_kit", kwargs={"kit_name_slug": kit.slug}))
+            return redirect(reverse("canoe_club:main_shed"))
         else:
             print(form.errors)
     return render(request, 'canoe_club/add_kit.html', {'form': form})

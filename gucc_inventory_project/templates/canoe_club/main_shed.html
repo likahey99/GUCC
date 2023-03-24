@@ -17,12 +17,13 @@
     </div>
     {% endif %}
     <div class="container p-3 justify-content-center" style="flex-direction: column;">
-{#    {% if kit %}#}
+    {% if kit_list %}
         {% for kit in kit_list %}
                 <div class="row m-3 justify-content-center">
                     <div class="col-sm-4 text-white" style="background-color: rgba(0,0,0,0.25);">
-                        <a href="{% url 'canoe_club:index' %}">
+                        <a href="{% url 'canoe_club:main_shed_kit' kit.slug %}" class="text-warning">
                             <h4>{{ kit.name }}</h4>
+                            <h5 class="text-white">Owner: {{ kit.owner }}</h5>
                         </a>
                     </div>
                     <div class="col-sm-2 bg-primary min-h-100 m-0 p-0">
@@ -63,9 +64,9 @@
                 </div>
         {% endfor %}
     </div>
-{#    {% else %}#}
-{#        <Strong>No Kit</Strong>#}
-{#    {% endif %}#}
+    {% else %}
+        <Strong>No Kit</Strong>
+    {% endif %}
 
 
     <script>

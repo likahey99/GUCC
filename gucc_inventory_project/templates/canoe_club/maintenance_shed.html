@@ -7,12 +7,14 @@
 
 {% block body_block %}
     <h1 class="text-center text-danger">Maintenance Shed</h1>
-{#    {% if Kit %} <!--if there is stuff in the database-->#}
+    {% if kit_list %} <!--if there is stuff in the database-->
     <div class="container p-3 justify-content-center" style="flex-direction: column;">
         {% for kit in kit_list %}
             <div class="row m-3 justify-content-center">
                 <div class="col-sm-4 text-white" style="background-color: rgba(0,0,0,0.25);">
-                    <h4>{{ kit.name }}</h4>
+                    <a href="{% url 'canoe_club:main_shed_kit' kit.slug %}" class="text-warning">
+                        <h4>{{ kit.name }}</h4>
+                    </a>
                     <p>{{ kit.maintenance_problem }}</p>
                 </div>
                 <div class="col-sm-2 bg-primary min-h-100 m-0 p-0">
@@ -72,5 +74,5 @@
         }
     </script>
 
-{#{% endif %}#}
-{% endblock %}
+{% endif %}
+{% endblock  %}
