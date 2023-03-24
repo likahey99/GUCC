@@ -107,7 +107,7 @@ def populate():
          'type': 'paddle',
          "maintenance": False,
          'maintenance_problem': None,
-         'amount': 4,},
+         'amount': 4, },
         {'name': 'wetsuit',
          'size': 0,
          'colour': 'green',
@@ -116,7 +116,7 @@ def populate():
          'type': 'wetsuit',
          "maintenance": True,
          'maintenance_problem': 'tear in wetsuit',
-         'amount': 2,},
+         'amount': 2, },
         {'name': 'canoe',
          'size': 0,
          'colour': 'blue',
@@ -144,13 +144,13 @@ def populate():
 
     for kit in kits:
         u = add_user(kit['owner']['is_admin'], kit['owner']['is_member'], kit['owner']['email']
-                        , kit['owner']['username'], kit['owner']['password'])
+                     , kit['owner']['username'], kit['owner']['password'])
         user = add_user_profile(u)
 
-        add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], user, kit['type'],
+        add_kit(kit['name'], kit['size'], kit['colour'], kit['brand'], u, kit['type'],
                 kit['maintenance_problem'], kit["maintenance"], kit['amount'])
         print(kit['name'], kit['size'], kit['colour'], kit['brand'], kit['type'],
-              kit['maintenance_problem'],kit["maintenance"], kit['amount'])
+              kit['maintenance_problem'], kit["maintenance"], kit['amount'])
 
 
 def add_user(is_admin, is_member, email, username, password):
@@ -182,7 +182,9 @@ def add_social(name, date, details, location):
 
 
 def add_kit(name, size, colour, brand, owner, type, maintenance_problem, maintenance, amount=0):
-    k = Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, maintenance=maintenance, type=type)[0]
+    k = \
+    Kit.objects.get_or_create(name=name, size=size, colour=colour, brand=brand, owner=owner, maintenance=maintenance,
+                              type=type)[0]
     if maintenance_problem is not None:
         k.maintenance_problem = maintenance_problem
     k.amount = amount + 1
