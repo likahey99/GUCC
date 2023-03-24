@@ -382,7 +382,7 @@ def add_trip(request):
         context_dict = {'form': form}
         return render(request, 'canoe_club/add_trip.html', context_dict)
     else:
-        return reverse(redirect("canoe_club:index"))
+        return redirect(reverse("canoe_club:index"))
 
 @login_required
 def remove_trip(request,trip_name_slug):
