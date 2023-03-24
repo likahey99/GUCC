@@ -133,8 +133,8 @@ def populate():
         for member in trip['members']:
             u = add_user(member['is_admin'], member['is_member'], member['email'], member['username'],
                          member['password'])
-            users.append(add_user_profile(u))
-
+            users.append(u)
+            add_user_profile(u)
         add_trip(trip['name'], trip['location'], trip['date'], trip['length'], users)
         print(trip['name'], trip['location'], trip['date'], trip['length'])
 

@@ -24,7 +24,7 @@ class Trip(models.Model):
     location = models.CharField(max_length=128)
     date = models.DateField()
     length = models.IntegerField(default=0)
-    members = models.ManyToManyField(UserProfile)
+    members = models.ManyToManyField(User)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
