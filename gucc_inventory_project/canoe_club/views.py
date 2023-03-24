@@ -32,7 +32,7 @@ def index(request):
 def about(request):
     return render(request, 'canoe_club/about.html')
 
-
+@login_required
 def main_shed(request):
     context_dict = {}
     context_dict['kit_list'] = Kit.objects.filter(maintenance=True).order_by('-type')
@@ -58,42 +58,50 @@ def main_shed(request):
 
     return render(request, 'canoe_club/main_shed.html', context_dict)
 
-
+@login_required
 def add_kit(request):
-    form = KitForm()
-    print(request.method)
-    if request.method == "POST":
-        form = KitForm(request.POST)
+    if request.user.is_admin:
+        form = KitForm()
+        print(request.method)
+        if request.method == "POST":
+            form = KitForm(request.POST)
 
-        if form.is_valid():
-            form.save(commit=True)
-            kit = Kit.objects.get(name=form.cleaned_data['name'])
-            return redirect(reverse("canoe_club:main_shed_kit", kwargs={"kit_name_slug": kit.slug}))
-        else:
-            print(form.errors)
-    return render(request, 'canoe_club/add_kit.html', {'form': form})
+            if form.is_valid():
+                form.save(commit=True)
+                kit = Kit.objects.get(name=form.cleaned_data['name'])
+                return redirect(reverse("canoe_club:main_shed_kit", kwargs={"kit_name_slug": kit.slug}))
+            else:
+                print(form.errors)
+        return render(request, 'canoe_club/add_kit.html', {'form': form})
+    else:
+        return redirect(reverse("Canoe_club:index"))
 
 
 # needs done
+@login_required
 def remove_kit(request):
-    form = KitForm()
-    print(request.method)
-    if request.method == "POST":
-        form = KitForm(request.POST)
+    if request.user.is_admin:
+        form = KitForm()
+        print(request.method)
+        if request.method == "POST":
+            form = KitForm(request.POST)
 
-        if form.is_valid():
-            form.save(commit=True)
-            kit = Kit.objects.get(name=form.cleaned_data['name'])
-            return redirect(reverse("canoe_club:main_shed_kit", kwargs={"kit_name_slug": kit.slug}))
-        else:
-            print(form.errors)
-    return render(request, 'canoe_club/remove_kit.html', {'form': form})
-
-
+            if form.is_valid():
+                form.save(commit=True)
+                kit = Kit.objects.get(name=form.cleaned_data['name'])
+                return redirect(reverse("canoe_club:main_shed_kit", kwargs={"kit_name_slug": kit.slug}))
+            else:
+                print(form.errors)
+        return render(request, 'canoe_club/remove_kit.html', {'form': form})
+    else:
+        return redirect(reverse("Canoe_club:index"))
+@login_required
 def move_shed(request):
+    if request.user.is_admin:
+        pass
     return render(request, 'canoe_club/move_shed.html')
 
-
+@login_required
 def maintenance_shed(request):
     context_dict = {}
     context_dict['kit_list'] = Kit.objects.filter(maintenance=True).order_by('-type')
@@ -119,7 +127,7 @@ def maintenance_shed(request):
 
     return render(request, 'canoe_club/maintenance_shed.html', context_dict)
 
-
+@login_required
 def kit(request, kit_name_slug):
     context_dict = {}
     try:
@@ -131,7 +139,7 @@ def kit(request, kit_name_slug):
 
     return render(request, "canoe_club/kit.html", context_dict)
 
-
+@login_required
 def move_kit(request, kit_name_slug):
     return render(request, "canoe_club/move_kit.html")
 
@@ -215,7 +223,7 @@ def password_reset_confirm(request, uidb64):
     else:
         return HttpResponse("Link has expired")
 
-
+@login_required
 def edit_profile(request):
     if request.method == "POST":
         user_form = UserUpdateForm(request.POST, instance=request.user)
@@ -286,7 +294,7 @@ def user_login(request):
 
     return render(request, "accounts/login.html")
 
-
+@login_required
 def user_logout(request):
     if request.method == "POST":
         logout(request)
@@ -314,23 +322,26 @@ def social(request, social_name_slug):
 
     return render(request, "canoe_club/social.html", context_dict)
 
-
+@login_required
 def add_social(request):
-    # try:
-    #     print(1)
-    #     # social = Social.objects.get(slug=social_name_slug)
-    # except Social.DoesNotExist:
-    #     return redirect(reverse("canoe_club:socials"))
-    form = SocialForm()
-    if request.method == "POST":
-        form = SocialForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect(reverse("canoe_club:socials"))
-        else:
-            print(form.errors)
-    context_dict = {'form': form, 'social': social}
-    return render(request, 'canoe_club/add_social.html', context_dict)
+    if request.user.is_admin:
+        # try:
+        #     print(1)
+        #     # social = Social.objects.get(slug=social_name_slug)
+        # except Social.DoesNotExist:
+        #     return redirect(reverse("canoe_club:socials"))
+        form = SocialForm()
+        if request.method == "POST":
+            form = SocialForm(request.POST)
+            if form.is_valid():
+                form.save(commit=True)
+                return redirect(reverse("canoe_club:socials"))
+            else:
+                print(form.errors)
+        context_dict = {'form': form, 'social': social}
+        return render(request, 'canoe_club/add_social.html', context_dict)
+    else:
+        return(redirect(reverse("canoe_club:index")))
 
 
 def remove_social(request, social_name_slug):

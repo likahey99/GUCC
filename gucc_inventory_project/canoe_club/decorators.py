@@ -15,3 +15,8 @@ def user_not_authenticated(function=None, redirect_url='/'):
         return decorator(function)
 
     return decorator
+
+def is_admin(user):
+    if not user.is_active:
+        return False
+    return user.is_admin

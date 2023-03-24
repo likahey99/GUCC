@@ -106,7 +106,7 @@ def populate():
          'owner': kitOwner1,
          'type': 'paddle',
          "maintenance": False,
-         'maintenance_problem': "N/A",
+         'maintenance_problem': None,
          'amount': 4,},
         {'name': 'wetsuit',
          'size': 0,
@@ -124,7 +124,7 @@ def populate():
          'owner': kitOwner3,
          'type': 'boat',
          "maintenance": True,
-         'maintenance_problem': "N/A",
+         'maintenance_problem': None,
          'amount': 2, }
     ]
 
