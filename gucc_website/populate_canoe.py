@@ -1,7 +1,7 @@
 import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                      'gucc_inventory_project.settings')
+                      'gucc_website.settings')
 
 import django
 
