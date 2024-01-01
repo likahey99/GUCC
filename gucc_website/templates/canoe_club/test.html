@@ -1,5 +1,11 @@
-<html>
-    <head>
+{% extends 'canoe_club/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Gallery
+{% endblock %}
+
+    {% block head_block %}
         <script>
             $('input').on('change', function() {
                 $('body').toggleClass('blue');
@@ -13,14 +19,17 @@
             box-sizing: border-box;
             }
 
-            html, body {
+            html, body{
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             }
+            
 
-            body {
+            main {
+            width: 100%;
+            height: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -69,7 +78,7 @@
             }
 
             img {
-            width: 100%;
+            /* width: 100%; */
             height: 100%;
             border-radius: 10px;
             object-fit: cover;
@@ -182,26 +191,40 @@
             #item-3:checked ~ .player #test  {
             transform: translateY(-80px);
             }
+
+            .copy {
+                display: block;
+                margin-block-start: auto;
+                margin-block-end: auto;
+            }
         </style>
-    </head>
+    {% endblock %}
     
+    {% block gallery_block %}
     <body>
+        <h1 class="text-center" style="color: rgb(34, 205, 179)">Gallery</h1>
+    <main>
         <div class="container">
             <input type="radio" name="slider" id="item-1" checked>
             <input type="radio" name="slider" id="item-2">
             <input type="radio" name="slider" id="item-3">
           <div class="cards">
             <label class="card" for="item-1" id="song-1">
-              <img src="https://images.unsplash.com/photo-1530651788726-1dbf58eeef1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=882&q=80" alt="song">
+              <!-- <img src="https://images.unsplash.com/photo-1530651788726-1dbf58eeef1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=882&q=80" alt="song"> -->
+              <img src="{% static 'images/kai_cool.jpg' %}" alt="song">
             </label>
             <label class="card" for="item-2" id="song-2">
-              <img src="https://images.unsplash.com/photo-1559386484-97dfc0e15539?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80" alt="song">
+              <!-- <img src="https://images.unsplash.com/photo-1559386484-97dfc0e15539?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80" alt="song"> -->
+              <img src="{% static 'images/patrick_fairy2.jpg' %}" alt="song">
             </label>
             <label class="card" for="item-3" id="song-3">
-              <img src="https://images.unsplash.com/photo-1533461502717-83546f485d24?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" alt="song">
+              <!-- <img src="https://images.unsplash.com/photo-1533461502717-83546f485d24?ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" alt="song"> -->
+              <img src="{% static 'images/patrick_fairy.jpg' %}" alt="song">
             </label>
           </div>
-          <div class="player">
+          <div class="w-75">
+          </div>
+          <!-- <div class="player">
             <div class="upper-part">
               <div class="play-icon">
                 <svg width="20" height="20" fill="#2992dc" stroke="#2992dc" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-play" viewBox="0 0 24 24">
@@ -237,6 +260,16 @@
               <span class="progress"></span>
             </div>
           </div>
-        </div>
+        </div> -->
+    </main>
+    {% endblock %}
+    {% block body_block %}
+    <div class="align-self-start">
+        <h1 class="">test</h1>
+    </div>
+
+
+    
+    <p class="align-self-end">Image Carousel Copyright (c) 2024 by Aybüke Ceylan (https://codepen.io/aybukeceylan/pen/RwrRPoO)</p>
     </body>
-</html>
+    {% endblock %}
