@@ -38,7 +38,8 @@ urlpatterns = [
     # path('trips/trip/member/', views.trip_member, name='trip_member'),
     path('trips/trip/remove_member/', views.remove_trip_member, name='remove_trip_member'),
 
-
+    path('gallery/', views.gallery, name='gallery'),
+    path('test/', views.test, name='test'),
 
     ]
 

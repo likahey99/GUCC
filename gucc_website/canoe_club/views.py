@@ -398,3 +398,9 @@ def add_trip_member(request):
 
 def remove_trip_member(request):
     return render(request, "canoe_club/trips/trip/member/remove_member.html")
+
+def gallery(request):
+    return render(request, 'canoe_club/gallery.html')
+
+def test(request):
+    return render(request, 'canoe_club/test.html')

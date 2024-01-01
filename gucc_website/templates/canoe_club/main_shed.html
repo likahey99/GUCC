@@ -8,7 +8,7 @@
 {% block body_block %}
     <h1 class="text-center" style="color: #ffcc33">Main Shed</h1>
     {% if user.is_admin %}
-    <div class="text-center mt-1 row justify-content-center">
+    <div class="text-center mt-1 justify-content-center">
         <div class="col">
             <a href="{% url 'canoe_club:add_kit'%}">
                 <button class="w-25 btn btn-lg btn-outline-light center" type="button" style="">Add Kit</button>

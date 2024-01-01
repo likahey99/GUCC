@@ -8,7 +8,7 @@
   <h1>Edit Profile</h1>
 </div>
 
-    <div class="container">
+    <div class="container text-white">
       <div class="row">
       {% if user.profile.picture %}
         <img src ="{{ MEDIA_URL }}{{ user.profile.picture.url }}" alt="" width="200" height="200"
@@ -17,12 +17,14 @@
         <img src="{% static 'images/default_user_profile.jpg' %}" width="200" height="200">
       {% endif %}
         <br/>
-        <form id="user_form" method="post" action="{% url 'canoe_club:edit_profile' %}" enctype="multipart/form-data" class="" >
-          {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-          <button class="w-25 btn btn-lg btn-outline-light mt-2" type="submit" value="Update">Update</button>
-        </form>
+        <div class="w-50 d-block h-75 rounded p-2 mx-auto" style="background-color: rgba(0,0,0,0.25);">
+          <form id="user_form" method="post" action="{% url 'canoe_club:edit_profile' %}" enctype="multipart/form-data" class="" >
+            {% csrf_token %}
+              {{ user_form.as_p }}
+              {{ profile_form.as_p }}
+            <button class="w-25 btn btn-lg btn-outline-light mt-2" type="submit" value="Update">Update</button>
+          </form>
+        </div>
         </div>
         <br/>
     </div>
