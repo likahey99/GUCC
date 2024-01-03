@@ -1,1 +1,1 @@
-# WAD_10A
+# GUCC website by Kai Hely
