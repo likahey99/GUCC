@@ -14,11 +14,18 @@
                 row row row your boat
             {% endblock %}
         </title>
+        <style>
+            @font-face {
+                font-family: 'debrosse';
+                src: url('/static/fonts/debrosse.ttf') format('truetype');
+            }
+        </style>
 
         <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+        <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" id="fontawesome-css">
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         {% block head_block %}
@@ -26,9 +33,11 @@
         {% endblock %}
     </head>
     <body style="background-repeat: no-repeat;background-size: 105%;background-attachment: fixed;margin: 0;background-image: url('{% static 'images/dalle.png' %}');background-color: #2f617d">
-        <header style="background-color: rgba(0,0,0,0.25);">
+        <header style="background-color: rgba(26, 68, 195, 0.25);">
             <!-- NAVBAR WIP not happy with it - Kai-->
-            <nav class="navbar navbar-expand-lg navbar-dark p-0 sticky-top">
+           
+            <!-- <nav class="navbar navbar-expand-lg navbar-dark p-0 sticky-top">
+
 
                 <div class="d-flex flex-grow-1">
 
@@ -94,20 +103,90 @@
                         {% endif %}
                     </ul>
                 </div>
+            </nav> --> 
+            
+            <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+                <a class="navbar-item d-none d-lg-inline-block" href="{% url 'canoe_club:index' %}">
+                    <img src="{% static 'images/canoe_club_logo.jpg' %}" alt="logo" class="mr-2" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse mr-auto" id="navbarNavDropdown">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'canoe_club:index' %}">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'canoe_club:about' %}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'canoe_club:trips' %}">Trips</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'canoe_club:socials' %}">Socials</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Inventory
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{% url 'canoe_club:main_shed' %}">Main Shed</a>
+                                <a class="dropdown-item" href="{% url 'canoe_club:maintenance_shed' %}">Repair Shed</a>
+                                <a class="dropdown-item" href="#">Pool Cupboard</a>
+                            </div>
+                        </li>
+
+                    </ul>
+            
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'canoe_club:login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'canoe_club:register' %}">Register</a>
+                        </li>
+                    
+            
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://www.facebook.com/profile.php?id=100054235790441   " target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </li>
+            
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://www.instagram.com/gusacanoe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </li>
+            
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/likahey99/GUCC" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
-    </header>
+
+        </header>
 
     {% block gallery_block %}{% endblock %}
 
-                <main role="main" class="min-vh-100 mb-3">
+                <main role="main" class="min-vh-100 mb-3 p-2">
                     {% block body_block %}{% endblock %}
                 <div class="p-5 d-block"></div>
 
 
                     <!-- FOOTER -->
                     <footer class="bg-info text-white text-center text-lg-start fixed-bottom bottom-border d-none d-sm-block mt-3">
-                        <p class="float-right"><a href="#" class="text-white mr-3">Back to top</a></p>
-                        <p>&copy; GUCC &middot; <a href="#" class="text-white">Privacy</a> &middot; <a href="#" class="text-white">Terms</a></p>
+                        <p class="float-right m-1"><a href="#" class="text-white mr-3">Back to top</a></p>
+                        <p class="m-1">&copy; GUCC &middot; <a href="#" class="text-white">Privacy</a> &middot; <a href="#" class="text-white">Terms</a></p>
                     </footer>
                 </main>
         <!-- Bootstrap core JavaScript -->

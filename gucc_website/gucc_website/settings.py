@@ -28,7 +28,8 @@ SECRET_KEY = 'fxid-_(e%y!w!dzxz2g*s(reu6p(f=_ze(pay(xad5syf8+r=p'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["gucc.pythonanywhere.com"]
+ALLOWED_HOSTS = ["gucc.pythonanywhere.com",
+                 "127.0.0.1"]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

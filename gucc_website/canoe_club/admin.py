@@ -1,5 +1,5 @@
 from django.contrib import admin
-from canoe_club.models import UserProfile, User, Kit, Social
+from canoe_club.models import UserProfile, User, Kit, Social,Trip
 # Register your models here.
 class UserProfileAdmin(admin.ModelAdmin):
     model = UserProfile
@@ -21,4 +21,5 @@ class UserAdmin(admin.ModelAdmin):
     admin.site.register(User)
     admin.site.register(Kit)
     admin.site.register(Social)
+    admin.site.register(Trip)
 

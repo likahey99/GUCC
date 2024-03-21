@@ -5,15 +5,15 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1 class="text-center" style="color: rgb(25,107,20)">Trips</h1>
+    <h1 class="text-center p-0" style="color: rgb(25,107,20)">Trips</h1>
 
     <div class="d-flex justify-content-center align-items-center container">
         <div style="width:inherit">
             {% if trips %}
                 {% for trip in trips %}
                     {% if forloop.first %}<div class="row" style="justify-content: space-between">{% endif %}
-                            <div class="col-sm-3 p-2 m-3 text-white rounded" style="background-color: rgba(51,214,41,0.25)">
-                                <a href="{% url 'canoe_club:trip' trip.slug %}" style="text-decoration: none;color: #006600"><h2>{{ trip.name }}</h2></a>
+                            <div class="col-sm-3 p-2 m-3 text-white rounded " style="background-color: rgba(51,214,41,0.60)">
+                                <a href="{% url 'canoe_club:trip' trip.slug %}" style="text-decoration: none;color: #1d201d"><h2>{{ trip.name }}</h2></a>
                                 <h4>Date: {{ trip.date }}</h4>
                                 <h5>location: {{ trip.location }} </h5>
                                 <h5>Days: {{ trip.length }}</h5>
