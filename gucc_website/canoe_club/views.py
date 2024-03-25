@@ -12,8 +12,6 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
-import cloudinary
-import cloudinary.uploader
 
 
 def index(request):
@@ -421,31 +419,6 @@ def test(request):
 #     else:
 #         form = ImageForm()
 
-
-def upload_images(request):
-    if request.method == 'POST':
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            images = request.FILES.getlist('image')
-            for image in images:
-                # Upload the image to Cloudinary
-                upload_result = cloudinary.uploader.upload(image)
-                
-                # Create a new Image instance and save it to the database
-                image_instance = Image(
-                    key=upload_result['public_id'],
-                    url=upload_result['url'],
-                    name=image.name,
-                    width=upload_result['width'],
-                    height=upload_result['height'],
-                    format=upload_result['format']
-                )
-                image_instance.save()
-            
-            return redirect('gallery')  # Redirect to a success page
-    else:
-        form = ImageUploadForm()
-    return render(request, 'upload.html', {'form': form})
 
 def file_upload_view(request):
     if request.method == 'POST':
