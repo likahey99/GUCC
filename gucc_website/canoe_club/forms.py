@@ -1,5 +1,7 @@
+from PIL import Image
 from django import forms
-from .models import User, UserProfile, Kit, Social, Trip
+from django.core.files.uploadedfile import SimpleUploadedFile
+from .models import User, UserProfile, Kit, Social, Trip, Image, Upload
 
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 class UserForm(forms.ModelForm):
@@ -54,3 +56,23 @@ class TripForm(forms.ModelForm):
     class Meta:
         model = Trip
         fields = ("name", "location", "date", "length", "members")
+
+class ImageForm(forms.Form):
+    class Meta:
+        model = Image
+        fields = ('image',)
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'multiple': True}),
+        }
+
+
+class ImageUploadForm(forms.Form):
+    image = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+class UploadForm(forms.ModelForm):
+    class Meta:
+        model = Upload
+        fields = ('title', 'files',)
+        widgets = {
+            'files': forms.ClearableFileInput(attrs={'multiple': True}),
+        }

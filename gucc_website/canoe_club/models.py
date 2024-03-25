@@ -71,3 +71,31 @@ class Social(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Album(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    date = models.DateField()
+    slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Album, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+    
+class Image(models.Model):
+    title = models.ImageField(upload_to="images")
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name="images")
+
+    def __str__(self):
+        return self.image
+    
+
+class Upload(models.Model):
+    title = models.CharField(max_length=255)
+    files = models.FileField(upload_to='uploads/%Y/%m/%d/', blank=True, null=True)
+
+    def __str__(self):
+        return self.title

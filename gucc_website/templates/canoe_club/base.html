@@ -28,6 +28,7 @@
         <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" id="fontawesome-css">
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Debrosse" type="text/css"/>
         {% block head_block %}
             <!-- empty -->
         {% endblock %}
@@ -129,6 +130,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'canoe_club:socials' %}">Socials</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'canoe_club:gallery' %}">Gallery</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
@@ -144,14 +148,23 @@
                     </ul>
             
                     <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'canoe_club:profile' user.username %}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'canoe_club:logout' %}">Logout</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'canoe_club:login' %}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'canoe_club:register' %}">Register</a>
-                        </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'canoe_club:login' %}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'canoe_club:register' %}">Register</a>
+                            </li>
                     
+                        {%endif%}
             
                         <li class="nav-item">
                             <a class="nav-link" href="https://www.facebook.com/profile.php?id=100054235790441   " target="_blank">

@@ -10,40 +10,37 @@
   <h1>{{ selected_user.username }}'s Profile</h1>
 </div>
 
-    <div class="container">
       <div class="row">
-      {% if profile.picture %}
-        <img src ="{{ MEDIA_URL }}{{ profile.picture.url }}" alt="{{ selected_user.username }}'s profile image" width="200" height="200"/>
-      {% else %} 
-        <img src="{% static 'images/default_user_profile.jpg' %}" width="200" height="200">
-      {% endif %}
-        <br/>
-        </div>
-        <br/>
-       
-    {% if selected_user == user %}
+        <div class="m-3">
+          {% if profile.picture %}
+            <img src ="{{ MEDIA_URL }}{{ profile.picture.url }}" alt="{{ selected_user.username }}'s profile image" width="200" height="200"/>
+          {% else %} 
+            <img src="{% static 'images/default_user_profile.jpg' %}" width="200" height="200">
+          {% endif %}
+          {% if selected_user == user %}
         <div class="row">
-          <form method="post" action="{% url 'canoe_club:edit_profile' %}">
-          {% csrf_token %}
-          <input type="submit" value="edit profile" />
-          </form>
-          <form method="post" action="{% url 'canoe_club:change_password' %}">
-          {% csrf_token %}
-          <input type="submit" value="change password" />
-          </form>
+          <div class="column p-3">
+            <form class="p-1" method="post" action="{% url 'canoe_club:edit_profile' %}">
+            {% csrf_token %}
+            <input type="submit" value="edit profile" />
+            </form>
+            <form class="p-1" method="post" action="{% url 'canoe_club:change_password' %}">
+            {% csrf_token %}
+            <input type="submit" value="change password" />
+            </form>
+          </div>
+        
         </div>
-    </div>
     {% endif %}
-    
-    <div>
-      <div class="container w-75 bg-danger">
-        <h2>info</h2>
-        <p>this would be over to the right and not red</p>
-        <p>Could have a little about the person. Could also have their level of kayaking ie what they are comfortable on, what they would want to do but is pushing for them and what they are not comfortable to do.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ligula nisl, pellentesque sit amet est ac, laoreet porttitor lectus. Morbi finibus dui id metus laoreet cursus. Sed at suscipit neque. Suspendisse potenti. Pellentesque imperdiet bibendum ante, id commodo erat cursus sit amet. Aliquam erat volutpat. Nulla eget dolor nulla. Maecenas maximus odio in aliquet iaculis.
-
-          Nunc commodo libero sit amet augue tempus auctor. Cras ullamcorper magna id mauris ultrices, at scelerisque ipsum dictum. Nullam pellentesque dolor nisi. Cras in aliquam felis. Cras nec molestie nisi, non lacinia nibh. Quisque vestibulum maximus aliquet. Curabitur tincidunt diam justo, vitae pretium erat condimentum at. Quisque auctor tempor volutpat. Mauris vestibulum ex urna, id finibus sem ornare nec. Cras mi enim, rutrum vel egestas non, dictum non enim.</p>  
+        </div>
+        <div class="w-75 m-3 text-white" style="background-color: rgba(0,0,0,0.25)">
+          <h2 class="text-center">info</h2>
+          <p>Could have a little about the person. Could also have their level of kayaking ie what they are comfortable on, what they would want to do but is pushing for them and what they are not comfortable to do.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ligula nisl, pellentesque sit amet est ac, laoreet porttitor lectus. Morbi finibus dui id metus laoreet cursus. Sed at suscipit neque. Suspendisse potenti. Pellentesque imperdiet bibendum ante, id commodo erat cursus sit amet. Aliquam erat volutpat. Nulla eget dolor nulla. Maecenas maximus odio in aliquet iaculis.
+  
+            Nunc commodo libero sit amet augue tempus auctor. Cras ullamcorper magna id mauris ultrices, at scelerisque ipsum dictum. Nullam pellentesque dolor nisi. Cras in aliquam felis. Cras nec molestie nisi, non lacinia nibh. Quisque vestibulum maximus aliquet. Curabitur tincidunt diam justo, vitae pretium erat condimentum at. Quisque auctor tempor volutpat. Mauris vestibulum ex urna, id finibus sem ornare nec. Cras mi enim, rutrum vel egestas non, dictum non enim.</p>  
+        </div>
       </div>
-    </div>
+    
   </div>
 {% endblock %}

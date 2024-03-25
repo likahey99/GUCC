@@ -41,6 +41,8 @@ urlpatterns = [
     path('gallery/', views.gallery, name='gallery'),
     path('test/', views.test, name='test'),
 
+    path('upload/', views.file_upload_view, name='file_upload'),
+
     ]
 
 
